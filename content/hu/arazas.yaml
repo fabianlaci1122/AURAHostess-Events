@@ -1,0 +1,40 @@
+# ─────────────────────────────────────────────────────────────
+#  ÁRAK – minden oldal innen veszi őket.
+#  Amíg "jovahagyva: false", az árak mellett sárga jelzés látszik,
+#  és a keresők nem kapnak árat a strukturált adatokban.
+# ─────────────────────────────────────────────────────────────
+
+jovahagyva: false
+jovahagyas_megjegyzes: "[[HIÁNYZIK: az árak jóváhagyása – tulajdonos]]"
+afa: "[[HIÁNYZIK: nettó vagy bruttó ár? (az ÁFA-státusztól függ)]]"
+
+oradij: 5000        # Ft / fő / óra
+kiallasi_dij: 5000  # Ft / fő / alkalom – a napi bejelentés költségét fedezi
+
+minimum_ora: "[[HIÁNYZIK: van-e minimális óraszám alkalmanként?]]"
+felarak: "[[HIÁNYZIK: van-e felár – pl. hétvége, késő este, nyelvtudás, Pécsen kívüli helyszín?]]"
+
+# Az Árak oldal számolási példája
+pelda:
+  letszam: 2
+  ora: 5
+
+# Az Árak oldal kalkulátorának felső határai
+kalkulator:
+  max_letszam: 10
+  max_ora: 12
+
+csomag:
+  nev: "Előadóest-csomag"
+  letszam: 4
+  ora: 3
+  ar: 72000
+  ar_megjegyzes: "[[HIÁNYZIK: a 72 000 Ft szándékos kedvezmény? Listaáron 80 000 Ft lenne.]]"
+  feladatok:
+    - "Jegyellenőrzés"
+    - "Helyre kísérés"
+    - "Ruhatár"
+
+potlas: "[[HIÁNYZIK: a pótlás menete – pl. mennyi idő alatt, és szólunk-e előre a megrendelőnek]]"
+lemondas: "[[HIÁNYZIK: lemondási feltételek – pl. hány nappal előtte díjmentes]]"
+fizetes: "[[HIÁNYZIK: fizetés módja és határideje – pl. átutalás, 8 nap]]"

@@ -1,0 +1,56 @@
+# ─────────────────────────────────────────────────────────────
+#  GYAKORI KÉRDÉSEK
+#  "oldalak": hol jelenjen meg a kérdés. Lehetséges értékek:
+#  fooldal, rendezveny, eloadoest, arak
+#  {kapcsos} = automatikus érték (pl. {oradij}, {max_egyszerre}).
+#  Ami még [[HIÁNYZIK]], az kimarad a Google-nek szóló adatokból.
+# ─────────────────────────────────────────────────────────────
+
+kerdesek:
+  - kerdes: "Mennyibe kerül egy hostess?"
+    valasz: "Az ár két részből áll: óradíj ({oradij}/fő/óra) és kiállási díj ({kiallasi_dij}/fő/alkalom). A kiállási díj a hostess napi bejelentésének költségét fedezi. {afa} Számolási példát az Árak oldalon talál."
+    oldalak: [fooldal, rendezveny, arak]
+
+  - kerdes: "Adnak számlát?"
+    valasz: "Igen, a megbízásról számlát állítunk ki. A hostesseink bejelentett munkavállalók: egyszerűsített foglalkoztatással dolgoznak nálunk."
+    oldalak: [fooldal, rendezveny, eloadoest, arak]
+
+  - kerdes: "Mi történik, ha egy hostess megbetegszik vagy kiesik?"
+    valasz: "Tartalék hostesszel dolgozunk. Ha valaki kiesik, pótoljuk – Önnek nem kell az utolsó pillanatban embert keresnie."
+    oldalak: [fooldal, rendezveny, eloadoest, arak]
+
+  - kerdes: "Hány hostesst tudnak küldeni egyszerre?"
+    valasz: "Egyszerre legfeljebb {max_egyszerre} hostesst tudunk biztosítani."
+    oldalak: [fooldal, rendezveny]
+
+  - kerdes: "Honnan tudják a hostessek, mi a dolguk?"
+    valasz: "Minden munka előtt írásos eligazítást kapnak: hely, idő, feladat, öltözet és a helyszíni kapcsolattartó. Mire megérkeznek, tudják, ki mit csinál."
+    oldalak: [fooldal, rendezveny, eloadoest]
+
+  - kerdes: "Mennyi idővel előre kell szólni?"
+    valasz: "[[HIÁNYZIK: minimális előfoglalási idő – tulajdonos]] A szeptember–novemberi főszezonban érdemes minél korábban jelezni."
+    oldalak: [fooldal, rendezveny, eloadoest, arak]
+
+  - kerdes: "Pécsen kívül is vállalnak munkát?"
+    valasz: "Pécsen és környékén dolgozunk. [[HIÁNYZIK: vállalnak-e Baranyán kívül, és van-e utazási költség?]]"
+    oldalak: [rendezveny]
+
+  - kerdes: "Beszélnek idegen nyelven a hostessek?"
+    valasz: "[[HIÁNYZIK: milyen nyelveken tudnak hostesst biztosítani]] A nyelvi igényt az ajánlatkérő űrlapon jelezheti."
+    oldalak: [rendezveny]
+
+  - kerdes: "Milyen öltözetben érkeznek?"
+    valasz: "Az öltözetet a megbízás előtt egyeztetjük, és az írásos eligazításban rögzítjük. [[HIÁNYZIK: van-e saját, egységes öltözet?]]"
+    oldalak: [rendezveny, eloadoest]
+
+  - kerdes: "Mit tartalmaz az előadóest-csomag?"
+    valasz: "{csomag_letszam} hostesst {csomag_ora} órára, fix áron. A feladatok: jegyellenőrzés, helyre kísérés és ruhatár."
+    oldalak: [eloadoest, arak]
+
+  - kerdes: "Mit jelent a keretmegállapodás?"
+    valasz: "Egyszer rögzítjük a feltételeket és a csomagárat. Utána az egyes estékre elég jelezni a dátumot, és mindig ugyanaz a csapat jön, egy kapcsolattartóval. [[HIÁNYZIK: a keretmegállapodás feltételei – pl. minimális időtartam vagy estek száma]]"
+    oldalak: [eloadoest]
+
+  - kerdes: "Turnéállomásra is vállalják a beléptetést?"
+    valasz: "Igen. A Pécsre érkező turnéállomásokon ugyanaz a csapat fogadja a közönséget, így minden alkalommal ismeri a menetet."
+    oldalak: [eloadoest]

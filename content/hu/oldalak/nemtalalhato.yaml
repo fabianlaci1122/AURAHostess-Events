@@ -1,0 +1,13 @@
+# ─────────────────────────────────────────────────────────────
+#  404 – NEM TALÁLHATÓ OLDAL
+# ─────────────────────────────────────────────────────────────
+
+seo:
+  title: "Az oldal nem található | AURA. Hostess & Events"
+  description: "Ezt az oldalt nem találjuk. Innen továbbmehet a főbb oldalakra."
+  noindex: true
+
+hero:
+  cimke: "404"
+  cim: "Ezt az oldalt nem találjuk"
+  alcim: "Lehet, hogy elírás van a címben, vagy az oldal megszűnt. Innen továbbmehet:"

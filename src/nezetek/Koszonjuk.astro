@@ -1,0 +1,57 @@
+---
+/**
+ * Köszönjük-oldal – minden sikeres űrlapküldés ide érkezik (?tipus=ajanlatkeres|jelentkezes|kapcsolat).
+ * Szerveren renderelődik, így JS nélkül is a megfelelő szöveg látszik. Itt mérjük a konverziót.
+ */
+import Base from '../layouts/Base.astro';
+import Ikon from '../components/Ikon.astro';
+import { ut, type Nyelv } from '../i18n/utak';
+import { alap, oldal, szekcio } from '../lib/tartalom';
+import { inline } from '../lib/szoveg';
+
+interface Props {
+  lang: Nyelv;
+  tipus: string | null;
+}
+const { lang } = Astro.props;
+const TIPUSOK = ['ajanlatkeres', 'jelentkezes', 'kapcsolat'] as const;
+const tipus = (TIPUSOK as readonly string[]).includes(Astro.props.tipus ?? '') ? (Astro.props.tipus as (typeof TIPUSOK)[number]) : 'ajanlatkeres';
+const kulcs = 'koszonjuk';
+const a = await alap(lang);
+const { ceg, tok } = a;
+const o = await oldal(lang, kulcs);
+const sz = szekcio(o, tipus, lang, kulcs);
+const tovabb = szekcio(o, 'tovabb', lang, kulcs);
+---
+
+<Base lang={lang} kulcs={kulcs} title={o.seo.title} description={o.seo.description} noindex mobilSav={false} a={a}>
+  <section class="sotet relative min-h-[70vh] overflow-hidden" aria-labelledby="oldal-cim" data-koszonjuk={tipus}>
+    <div class="tarolo grid gap-12 py-20 sm:py-28 lg:grid-cols-12">
+      <div class="lg:col-span-8">
+        <span class="inline-grid h-16 w-16 place-items-center rounded-full border border-bronz text-bronz">
+          <Ikon nev="pipa" meret={30} />
+        </span>
+        <h1 id="oldal-cim" class="h1 mt-8" set:html={inline(sz.cim, tok)} />
+        {sz.szoveg && <p class="bevezeto mt-6" set:html={inline(sz.szoveg, tok)} />}
+        {sz.megjegyzes && <p class="mt-6 text-elefant" set:html={inline(sz.megjegyzes, tok)} />}
+        <div class="mt-12 flex flex-col gap-3 sm:flex-row">
+          <a href={ut('fooldal', lang)} class="gomb gomb-korvonal-vilagos" set:html={inline(tovabb.link_szoveg, tok)} />
+          <a href={ceg.instagram} class="gomb gomb-bronz" data-hely="koszonjuk" rel="noopener">
+            <Ikon nev="instagram" meret={18} />{ceg.instagram_nev}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { ESEMENYEK, meres } from '../scripts/meres';
+  const doboz = document.querySelector<HTMLElement>('[data-koszonjuk]');
+  const tipus = new URLSearchParams(location.search).get('tipus');
+  if (doboz && tipus && tipus in ESEMENYEK) {
+    meres(ESEMENYEK[tipus as 'ajanlatkeres' | 'jelentkezes' | 'kapcsolat']);
+    // Újratöltéskor ne mérjünk még egyszer
+    history.replaceState(null, '', location.pathname);
+  }
+</script>

@@ -1,0 +1,105 @@
+---
+import Base from '../layouts/Base.astro';
+import AjanlatSzekcio from '../components/AjanlatSzekcio.astro';
+import AlHero from '../components/AlHero.astro';
+import Csomag from '../components/Csomag.astro';
+import ElemRacs from '../components/ElemRacs.astro';
+import Gyik from '../components/Gyik.astro';
+import Lepesek from '../components/Lepesek.astro';
+import ReferenciaKartya from '../components/ReferenciaKartya.astro';
+import SzekcioFej from '../components/SzekcioFej.astro';
+import { ut, type Nyelv } from '../i18n/utak';
+import { alap, gyik, oldal, referenciak, szekcio } from '../lib/tartalom';
+import { gyikSema, morzsaSema, szolgaltatas } from '../lib/seo';
+import { inline } from '../lib/szoveg';
+
+interface Props {
+  lang: Nyelv;
+}
+const { lang } = Astro.props;
+const kulcs = 'eloadoest';
+const a = await alap(lang);
+const { felulet: f, ceg, tok, arazas } = a;
+const o = await oldal(lang, kulcs);
+const sz = (k: string) => szekcio(o, k, lang, kulcs);
+const kerdesek = await gyik(lang, kulcs);
+const ref = (await referenciak(lang, kulcs)).esetek[0];
+const site = Astro.site!;
+const morzsa = [
+  { nev: f.morzsa.fooldal, href: ut('fooldal', lang) },
+  { nev: f.menu.pontok.find((p) => p.oldal === kulcs)?.szoveg ?? o.hero.cim, href: ut(kulcs, lang) },
+];
+const csomag = sz('csomag');
+const keret = sz('keret');
+---
+
+<Base
+  lang={lang}
+  kulcs={kulcs}
+  title={o.seo.title}
+  description={o.seo.description}
+  vanUrlap
+  a={a}
+  jsonld={[
+    szolgaltatas(
+      { nev: arazas.csomag.nev, leiras: o.seo.description, url: new URL(ut(kulcs, lang), site).href, tipus: 'Beléptetés és jegyellenőrzés', ar: arazas.csomag.ar },
+      site,
+      arazas,
+    ),
+    gyikSema(kerdesek, tok),
+    morzsaSema(morzsa, site),
+  ]}
+>
+  <AlHero cim={o.hero.cim} alcim={o.hero.alcim} foto={o.hero.foto} morzsa={morzsa} gombok={{ ajanlat: '#ajanlatkeres', telefon: ceg.telefon }} tok={tok} f={f} />
+
+  <section class="szekcio" aria-labelledby="kinek-cim">
+    <div class="tarolo">
+      <SzekcioFej id="kinek-cim" cimke={sz('kinek').cimke} cim={sz('kinek').cim} tok={tok} />
+      <ElemRacs elemek={sz('kinek').elemek ?? []} oszlop={2} valtozat="kartya" tok={tok} class="mt-12" />
+    </div>
+  </section>
+
+  <section class="szekcio hatter-homok" aria-labelledby="csomag-cim">
+    <div class="tarolo grid gap-12 lg:grid-cols-12 lg:items-center">
+      <div class="lg:col-span-5">
+        <SzekcioFej id="csomag-cim" cimke={csomag.cimke} cim={csomag.cim} bevezeto={csomag.szoveg} tok={tok} />
+      </div>
+      <div class="lg:col-span-7"><Csomag ar={arazas} tok={tok} f={f} href="#ajanlatkeres" /></div>
+    </div>
+  </section>
+
+  <section class="szekcio" aria-labelledby="keret-cim">
+    <div class="tarolo">
+      <SzekcioFej id="keret-cim" cimke={keret.cimke} cim={keret.cim} tok={tok} />
+      <ElemRacs elemek={keret.elemek ?? []} oszlop={3} tok={tok} class="mt-12" />
+      {keret.megjegyzes && <p class="mt-10 text-sm" set:html={inline(keret.megjegyzes, tok)} />}
+    </div>
+  </section>
+
+  <section class="szekcio hatter-homok" aria-labelledby="indulas-cim">
+    <div class="tarolo">
+      <SzekcioFej id="indulas-cim" cimke={sz('indulas').cimke} cim={sz('indulas').cim} tok={tok} />
+      <div class="mt-14"><Lepesek elemek={sz('indulas').elemek ?? []} tok={tok} /></div>
+    </div>
+  </section>
+
+  {
+    ref && (
+      <section class="szekcio" aria-labelledby="referencia-cim">
+        <div class="tarolo">
+          <SzekcioFej id="referencia-cim" cimke={sz('referencia').cimke} cim={sz('referencia').cim} tok={tok} />
+          <div class="mt-12"><ReferenciaKartya r={ref} tok={tok} szeles /></div>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="szekcio border-t border-vonal" aria-labelledby="gyik-cim">
+    <div class="tarolo grid gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-4"><SzekcioFej id="gyik-cim" cimke={sz('gyik').cimke} cim={sz('gyik').cim} tok={tok} /></div>
+      <div class="lg:col-span-8"><Gyik kerdesek={kerdesek} tok={tok} /></div>
+    </div>
+  </section>
+
+  <AjanlatSzekcio lang={lang} kulcs={kulcs} a={a} sz={sz('ajanlat')} tipusAlap="eloadoest" />
+</Base>

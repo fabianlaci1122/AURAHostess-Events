@@ -1,0 +1,44 @@
+---
+/** Rövid kapcsolati űrlap. */
+import Mezo from './Mezo.astro';
+import UrlapVeg from './UrlapVeg.astro';
+import { API, type Nyelv, type OldalKulcs } from '../../i18n/utak';
+import { tokenek } from '../../lib/szoveg';
+import type { alap } from '../../lib/tartalom';
+
+interface Props {
+  lang: Nyelv;
+  kulcs: OldalKulcs;
+  a: Awaited<ReturnType<typeof alap>>;
+}
+const { lang, kulcs, a } = Astro.props;
+const { felulet: f, tok } = a;
+const u = f.urlap;
+const m = u.kapcsolat.mezok;
+const id = 'kapcsolat-urlap';
+const nk = u.nem_kotelezo;
+const uzenetek = Object.fromEntries(Object.entries(u.uzenetek.magazo).map(([k, v]) => [k, tokenek(v, tok)]));
+---
+
+<form id={id} action={API.kapcsolat} method="post" data-urlap="kapcsolat" class="kartya p-5 sm:p-8">
+  <script type="application/json" data-uzenetek set:html={JSON.stringify(uzenetek)} />
+  <p class="urlap-doboz mb-6" data-osszegzo role="alert" tabindex="-1"></p>
+
+  <div class="grid gap-x-5 gap-y-6 sm:grid-cols-2">
+    <Mezo urlapId={id} nev="nev" cimke={m.nev.cimke} kotelezo autocomplete="name" max={100} nemKotelezo={nk} tok={tok} class="sm:col-span-2" />
+    <Mezo urlapId={id} nev="email" tipus="email" cimke={m.email.cimke} kotelezo autocomplete="email" max={200} nemKotelezo={nk} tok={tok} />
+    <Mezo urlapId={id} nev="telefon" tipus="tel" cimke={m.telefon.cimke} autocomplete="tel" max={30} nemKotelezo={nk} tok={tok} />
+    <Mezo urlapId={id} nev="uzenet" tipus="textarea" cimke={m.uzenet.cimke} kotelezo max={2000} nemKotelezo={nk} tok={tok} class="sm:col-span-2" />
+  </div>
+
+  <div class="mt-8 grid gap-6">
+    <UrlapVeg urlapId={id} lang={lang} kulcs={kulcs} f={f} />
+    <div>
+      <button type="submit" class="gomb gomb-bronz w-full sm:w-auto" data-folyamatban={u.kuldes_folyamatban}>{u.kapcsolat.kuldes}</button>
+    </div>
+  </div>
+</form>
+
+<script>
+  import '../../scripts/urlap';
+</script>

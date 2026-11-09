@@ -1,0 +1,90 @@
+---
+import Base from '../layouts/Base.astro';
+import AlHero from '../components/AlHero.astro';
+import Ikon from '../components/Ikon.astro';
+import SzekcioFej from '../components/SzekcioFej.astro';
+import KapcsolatUrlap from '../components/urlap/KapcsolatUrlap.astro';
+import { ut, type Nyelv } from '../i18n/utak';
+import { alap, oldal, szekcio } from '../lib/tartalom';
+import { morzsaSema, vallalkozas } from '../lib/seo';
+import { inline, mailHref, telHref } from '../lib/szoveg';
+
+interface Props {
+  lang: Nyelv;
+}
+const { lang } = Astro.props;
+const kulcs = 'kapcsolat';
+const a = await alap(lang);
+const { felulet: f, ceg, tok } = a;
+const o = await oldal(lang, kulcs);
+const sz = (k: string) => szekcio(o, k, lang, kulcs);
+const site = Astro.site!;
+const morzsa = [
+  { nev: f.morzsa.fooldal, href: ut('fooldal', lang) },
+  { nev: o.hero.cim, href: ut(kulcs, lang) },
+];
+const el = sz('elerhetosegek');
+const urlap = sz('urlap');
+const sorok = [
+  { ikon: 'telefon', cimke: f.ajanlat_szekcio.telefon, ertek: ceg.telefon, href: telHref(ceg.telefon, '#telefon') },
+  { ikon: 'email', cimke: f.ajanlat_szekcio.email, ertek: ceg.email, href: mailHref(ceg.email, '#email') },
+  { ikon: 'instagram', cimke: 'Instagram', ertek: ceg.instagram_nev, href: ceg.instagram },
+];
+---
+
+<Base
+  lang={lang}
+  kulcs={kulcs}
+  title={o.seo.title}
+  description={o.seo.description}
+  a={a}
+  jsonld={[vallalkozas(ceg, site, new URL('/og/aura-alap.png', site).href), morzsaSema(morzsa, site)]}
+>
+  <AlHero cim={o.hero.cim} alcim={o.hero.alcim} morzsa={morzsa} tok={tok} f={f} />
+
+  <section class="szekcio" aria-labelledby="elerhetoseg-cim">
+    <div class="tarolo grid gap-14 lg:grid-cols-12 lg:gap-16">
+      <div class="lg:col-span-5">
+        <SzekcioFej id="elerhetoseg-cim" cimke={el.cimke} cim={el.cim} tok={tok} />
+        <ul class="mt-10 border-t border-vonal" role="list">
+          {
+            sorok.map((s) => (
+              <li class="border-b border-vonal">
+                <a id={s.ikon} href={s.href} class="group flex min-h-[4.5rem] items-center gap-4 py-3" data-hely="kapcsolat" rel={s.ikon === 'instagram' ? 'noopener' : undefined}>
+                  <span class="inline-grid h-11 w-11 shrink-0 place-items-center rounded-full border border-bronz text-bronz-mely">
+                    <Ikon nev={s.ikon} meret={20} />
+                  </span>
+                  <span class="grid">
+                    <span class="text-xs font-medium tracking-[0.14em] uppercase text-halvany">{s.cimke}</span>
+                    <span class="text-lg font-medium group-hover:text-bronz-mely" set:html={inline(s.ertek)} />
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+          <li class="flex items-start gap-4 border-b border-vonal py-4">
+            <span class="inline-grid h-11 w-11 shrink-0 place-items-center rounded-full border border-bronz text-bronz-mely"><Ikon nev="terkep" meret={20} /></span>
+            <span class="grid gap-1">
+              <span set:html={inline(f.lablec.terulet, tok)} />
+              <span class="text-sm" set:html={inline(ceg.google_cegprofil)} />
+            </span>
+          </li>
+        </ul>
+        {el.szoveg && <p class="mt-6 halvany" set:html={inline(el.szoveg, tok)} />}
+      </div>
+
+      <div class="lg:col-span-7">
+        <SzekcioFej id="urlap-cim" cimke={urlap.cimke} cim={urlap.cim} bevezeto={urlap.bevezeto} tok={tok} />
+        <div class="mt-8"><KapcsolatUrlap lang={lang} kulcs={kulcs} a={a} /></div>
+        {
+          urlap.link_szoveg && (
+            <a href={`${ut('fooldal', lang)}#ajanlatkeres`} class="nyil-link mt-6">
+              <span set:html={inline(urlap.link_szoveg, tok)} />
+              <Ikon nev="nyil" meret={18} />
+            </a>
+          )
+        }
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,38 @@
+---
+/** Impresszum és Adatkezelési tájékoztató (Markdown a content/<nyelv>/jogi/ mappából). */
+import Base from '../layouts/Base.astro';
+import AlHero from '../components/AlHero.astro';
+import { ut, type Nyelv } from '../i18n/utak';
+import { alap, jogi } from '../lib/tartalom';
+import { morzsaSema } from '../lib/seo';
+import { inline, tokenekHtml } from '../lib/szoveg';
+
+interface Props {
+  lang: Nyelv;
+  nev: 'impresszum' | 'adatkezeles';
+}
+const { lang, nev } = Astro.props;
+const a = await alap(lang);
+const { felulet: f, tok } = a;
+const bejegyzes = await jogi(lang, nev);
+const d = bejegyzes.data;
+const html = tokenekHtml(bejegyzes.rendered?.html ?? '', tok);
+const site = Astro.site!;
+const morzsa = [
+  { nev: f.morzsa.fooldal, href: ut('fooldal', lang) },
+  { nev: d.cim, href: ut(nev, lang) },
+];
+const frissitve = new Intl.DateTimeFormat('hu-HU', { dateStyle: 'long' }).format(new Date(d.frissitve));
+---
+
+<Base lang={lang} kulcs={nev} title={d.title} description={d.description} a={a} jsonld={[morzsaSema(morzsa, site)]}>
+  <AlHero cim={d.cim} morzsa={morzsa} tok={tok} f={f}>
+    <p class="mt-5 text-sm text-elefant-halvany">Utoljára frissítve: {frissitve}</p>
+  </AlHero>
+  <section class="szekcio">
+    <div class="tarolo">
+      {d.vazlat && d.vazlat_megjegyzes && <p class="mb-10 max-w-3xl text-base" set:html={inline(`[[HIÁNYZIK: ${d.vazlat_megjegyzes}]]`)} />}
+      <div class="jogi-szoveg max-w-3xl" set:html={html} />
+    </div>
+  </section>
+</Base>

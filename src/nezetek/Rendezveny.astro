@@ -1,0 +1,118 @@
+---
+import Base from '../layouts/Base.astro';
+import AjanlatSzekcio from '../components/AjanlatSzekcio.astro';
+import AlHero from '../components/AlHero.astro';
+import ElemRacs from '../components/ElemRacs.astro';
+import Gyik from '../components/Gyik.astro';
+import Ikon from '../components/Ikon.astro';
+import Lepesek from '../components/Lepesek.astro';
+import Pontlista from '../components/Pontlista.astro';
+import ReferenciaKartya from '../components/ReferenciaKartya.astro';
+import SzekcioFej from '../components/SzekcioFej.astro';
+import { ut, type Nyelv } from '../i18n/utak';
+import { alap, gyik, oldal, referenciak, szekcio } from '../lib/tartalom';
+import { gyikSema, morzsaSema, szolgaltatas } from '../lib/seo';
+import { inline } from '../lib/szoveg';
+
+interface Props {
+  lang: Nyelv;
+}
+const { lang } = Astro.props;
+const kulcs = 'rendezveny';
+const a = await alap(lang);
+const { felulet: f, ceg, tok, arazas } = a;
+const o = await oldal(lang, kulcs);
+const sz = (k: string) => szekcio(o, k, lang, kulcs);
+const kerdesek = await gyik(lang, kulcs);
+const ref = (await referenciak(lang, kulcs)).esetek[0];
+const site = Astro.site!;
+const morzsa = [
+  { nev: f.morzsa.fooldal, href: ut('fooldal', lang) },
+  { nev: o.hero.cim, href: ut(kulcs, lang) },
+];
+const tipusok = sz('tipusok');
+const feladatok = sz('feladatok');
+const arban = sz('arban');
+const intezmeny = sz('intezmenyeknek');
+---
+
+<Base
+  lang={lang}
+  kulcs={kulcs}
+  title={o.seo.title}
+  description={o.seo.description}
+  vanUrlap
+  a={a}
+  jsonld={[
+    szolgaltatas({ nev: o.hero.cim, leiras: o.seo.description, url: new URL(ut(kulcs, lang), site).href, tipus: 'Rendezvény-hostess' }, site, arazas),
+    gyikSema(kerdesek, tok),
+    morzsaSema(morzsa, site),
+  ]}
+>
+  <AlHero cim={o.hero.cim} alcim={o.hero.alcim} foto={o.hero.foto} morzsa={morzsa} gombok={{ ajanlat: '#ajanlatkeres', telefon: ceg.telefon }} tok={tok} f={f} />
+
+  <section class="szekcio" aria-labelledby="tipusok-cim">
+    <div class="tarolo">
+      <SzekcioFej id="tipusok-cim" cimke={tipusok.cimke} cim={tipusok.cim} tok={tok} />
+      <ElemRacs elemek={tipusok.elemek ?? []} oszlop={4} valtozat="foto" tok={tok} class="mt-12" />
+    </div>
+  </section>
+
+  <section class="szekcio hatter-homok" aria-labelledby="feladatok-cim">
+    <div class="tarolo grid gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-5">
+        <SzekcioFej id="feladatok-cim" cimke={feladatok.cimke} cim={feladatok.cim} tok={tok} />
+        {feladatok.megjegyzes && <p class="mt-6 border-l-2 border-bronz pl-5 text-lg" set:html={inline(feladatok.megjegyzes, tok)} />}
+      </div>
+      <div class="lg:col-span-7"><ElemRacs elemek={feladatok.elemek ?? []} oszlop={2} tok={tok} /></div>
+    </div>
+  </section>
+
+  <section class="szekcio" aria-label={`${arban.cim} · ${intezmeny.cimke}`}>
+    <div class="tarolo grid gap-8 lg:grid-cols-2">
+      <div class="kartya p-6 sm:p-10">
+        <p class="cimke" set:html={inline(arban.cimke, tok)} />
+        <h2 class="h2 mt-4" set:html={inline(arban.cim, tok)} />
+        <Pontlista pontok={arban.pontok ?? []} tok={tok} class="mt-8" />
+        <div class="mt-4 flex flex-wrap gap-2 text-sm">
+          {!arazas.jovahagyva && <span set:html={inline(arazas.jovahagyas_megjegyzes, tok)} />}
+          <span set:html={inline(arazas.afa, tok)} />
+        </div>
+        <a href={ut('arak', lang)} class="nyil-link mt-6"><span set:html={inline(arban.link_szoveg, tok)} /><Ikon nev="nyil" meret={18} /></a>
+      </div>
+      <div class="sotet p-6 sm:p-10">
+        <p class="cimke" set:html={inline(intezmeny.cimke, tok)} />
+        <h2 class="h2 mt-4" set:html={inline(intezmeny.cim, tok)} />
+        <Pontlista pontok={intezmeny.pontok ?? []} tok={tok} class="mt-8 [&_span.border-bronz]:text-bronz" />
+        {intezmeny.megjegyzes && <p class="mt-6 text-sm" set:html={inline(intezmeny.megjegyzes, tok)} />}
+      </div>
+    </div>
+  </section>
+
+  <section class="szekcio hatter-homok" aria-labelledby="menete-cim">
+    <div class="tarolo">
+      <SzekcioFej id="menete-cim" cimke={sz('menete').cimke} cim={sz('menete').cim} tok={tok} />
+      <div class="mt-14"><Lepesek elemek={sz('menete').elemek ?? []} tok={tok} /></div>
+    </div>
+  </section>
+
+  {
+    ref && (
+      <section class="szekcio" aria-labelledby="referencia-cim">
+        <div class="tarolo">
+          <SzekcioFej id="referencia-cim" cimke={sz('referencia').cimke} cim={sz('referencia').cim} tok={tok} />
+          <div class="mt-12"><ReferenciaKartya r={ref} tok={tok} szeles /></div>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="szekcio border-t border-vonal" aria-labelledby="gyik-cim">
+    <div class="tarolo grid gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-4"><SzekcioFej id="gyik-cim" cimke={sz('gyik').cimke} cim={sz('gyik').cim} tok={tok} /></div>
+      <div class="lg:col-span-8"><Gyik kerdesek={kerdesek} tok={tok} /></div>
+    </div>
+  </section>
+
+  <AjanlatSzekcio lang={lang} kulcs={kulcs} a={a} sz={sz('ajanlat')} tipusAlap="konferencia" />
+</Base>

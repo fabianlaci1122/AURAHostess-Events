@@ -1,0 +1,58 @@
+---
+/** Hostess-jelentkezés (tegező). */
+import Mezo from './Mezo.astro';
+import Valasztok from './Valasztok.astro';
+import UrlapVeg from './UrlapVeg.astro';
+import { API, type Nyelv, type OldalKulcs } from '../../i18n/utak';
+import { inline, tokenek } from '../../lib/szoveg';
+import type { alap } from '../../lib/tartalom';
+
+interface Props {
+  lang: Nyelv;
+  kulcs: OldalKulcs;
+  a: Awaited<ReturnType<typeof alap>>;
+}
+const { lang, kulcs, a } = Astro.props;
+const { felulet: f, tok } = a;
+const u = f.urlap;
+const m = u.jelentkezes.mezok;
+const id = 'jelentkezes-urlap';
+const nk = u.nem_kotelezo;
+const uzenetek = Object.fromEntries(Object.entries(u.uzenetek.tegezo).map(([k, v]) => [k, tokenek(v, tok)]));
+---
+
+<form id={id} action={API.jelentkezes} method="post" data-urlap="jelentkezes" class="kartya p-5 sm:p-8">
+  <script type="application/json" data-uzenetek set:html={JSON.stringify(uzenetek)} />
+  <p class="urlap-doboz mb-6" data-osszegzo role="alert" tabindex="-1"></p>
+
+  <div class="grid gap-x-5 gap-y-6 sm:grid-cols-2">
+    <Mezo urlapId={id} nev="nev" cimke={m.nev.cimke} kotelezo autocomplete="name" max={100} nemKotelezo={nk} tok={tok} />
+    <Mezo urlapId={id} nev="email" tipus="email" cimke={m.email.cimke} kotelezo autocomplete="email" max={200} nemKotelezo={nk} tok={tok} />
+    <Mezo urlapId={id} nev="telefon" tipus="tel" cimke={m.telefon.cimke} kotelezo autocomplete="tel" max={30} nemKotelezo={nk} tok={tok} />
+    <Mezo urlapId={id} nev="varos" cimke={m.varos.cimke} sugo={m.varos.sugo} kotelezo autocomplete="address-level2" max={100} nemKotelezo={nk} tok={tok} />
+
+    <div class="mezo sm:col-span-2" data-mezo="eletkor">
+      <div class="jelolo">
+        <input id={`${id}-eletkor`} type="checkbox" name="eletkor" value="igen" required aria-describedby={`${id}-eletkor-hiba`} />
+        <label for={`${id}-eletkor`} set:html={inline(m.eletkor.cimke, tok)} />
+      </div>
+      <p id={`${id}-eletkor-hiba`} class="mezo-hiba" data-hiba></p>
+    </div>
+
+    <Mezo urlapId={id} nev="nyelvek" cimke={m.nyelvek.cimke} sugo={m.nyelvek.sugo} max={200} nemKotelezo={nk} tok={tok} class="sm:col-span-2" />
+    <Valasztok urlapId={id} nev="napok" tipus="checkbox" cimke={m.napok.cimke} opciok={u.jelentkezes.napok} nemKotelezo={nk} tok={tok} class="sm:col-span-2" />
+    <Mezo urlapId={id} nev="tapasztalat" tipus="textarea" cimke={m.tapasztalat.cimke} sugo={m.tapasztalat.sugo} max={2000} nemKotelezo={nk} tok={tok} class="sm:col-span-2" />
+    <Mezo urlapId={id} nev="profil" cimke={m.profil.cimke} sugo={m.profil.sugo} max={300} nemKotelezo={nk} tok={tok} class="sm:col-span-2" />
+  </div>
+
+  <div class="mt-8 grid gap-6">
+    <UrlapVeg urlapId={id} lang={lang} kulcs={kulcs} f={f} />
+    <div>
+      <button type="submit" class="gomb gomb-bronz w-full sm:w-auto" data-folyamatban={u.kuldes_folyamatban}>{u.jelentkezes.kuldes}</button>
+    </div>
+  </div>
+</form>
+
+<script>
+  import '../../scripts/urlap';
+</script>

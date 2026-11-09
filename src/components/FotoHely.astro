@@ -1,0 +1,54 @@
+---
+/**
+ * Fotó vagy jelölt helyőrző.
+ * Valódi kép: tedd a content/fotok/ mappába, és a tartalomfájlban add meg
+ *   foto: { leiras: "…", fajl: "kep.jpg", alt: "Mi látható a képen" }
+ * A kép automatikusan AVIF/WebP lesz, több méretben, lusta betöltéssel.
+ */
+import { Picture } from 'astro:assets';
+import Ikon from './Ikon.astro';
+
+interface Props {
+  foto?: { leiras: string; fajl?: string; alt?: string };
+  arany?: string;
+  class?: string;
+  meretek?: string;
+  kiemelt?: boolean;
+}
+
+const kepek = import.meta.glob<{ default: ImageMetadata }>('/content/fotok/*.{jpg,jpeg,png,webp,avif}', {
+  eager: true,
+});
+
+const { foto, arany = '4 / 3', class: osztaly = '', meretek = '(min-width: 1024px) 45vw, 100vw', kiemelt = false } =
+  Astro.props;
+const leiras = foto?.leiras ?? 'FOTÓ';
+
+let kep: ImageMetadata | undefined;
+if (foto?.fajl) {
+  kep = kepek[`/content/fotok/${foto.fajl}`]?.default;
+  if (!kep) throw new Error(`A(z) "${foto.fajl}" kép nem található a content/fotok/ mappában.`);
+  if (!foto.alt) throw new Error(`A(z) "${foto.fajl}" képhez írj rövid leírást (alt), akadálymentességi okból.`);
+}
+---
+
+{
+  kep ? (
+    <Picture
+      src={kep}
+      alt={foto!.alt!}
+      formats={['avif', 'webp']}
+      widths={[480, 800, 1200, 1600]}
+      sizes={meretek}
+      loading={kiemelt ? 'eager' : 'lazy'}
+      fetchpriority={kiemelt ? 'high' : 'auto'}
+      class:list={['foto-kep', osztaly]}
+      style={`aspect-ratio: ${arany}`}
+    />
+  ) : (
+    <div class:list={['foto-hely', osztaly]} style={`aspect-ratio: ${arany}`} role="img" aria-label={`Helyőrző – ${leiras}`}>
+      <Ikon nev="kamera" meret={26} />
+      <span>{leiras}</span>
+    </div>
+  )
+}

@@ -1,0 +1,72 @@
+---
+/**
+ * Tájékoztató árkalkulátor (hostessek × órák). JS nélkül a példa és a képlet látszik,
+ * a kalkulátor csak JS-sel jelenik meg.
+ */
+import { forint, inline, type Tokenek } from '../lib/szoveg';
+import type { Arazas, Felulet } from '../lib/tartalom';
+
+interface Props {
+  ar: Arazas;
+  f: Felulet;
+  tok: Tokenek;
+}
+const { ar, f, tok } = Astro.props;
+const k = f.kalkulator;
+const alapLetszam = ar.pelda.letszam;
+const alapOra = ar.pelda.ora;
+const oradijResz = ar.oradij * alapLetszam * alapOra;
+const kiallasiResz = ar.kiallasi_dij * alapLetszam;
+---
+
+<div class="kartya p-6 sm:p-8" data-kalkulator data-oradij={ar.oradij} data-kiallasi={ar.kiallasi_dij} hidden>
+  <h3 class="h3-display">{k.cim}</h3>
+  <div class="mt-6 grid gap-5 sm:grid-cols-2">
+    <div class="mezo">
+      <label for="kalk-letszam" class="mezo-cimke">{k.letszam}</label>
+      <input id="kalk-letszam" type="number" class="bemenet" min="1" max={ar.kalkulator.max_letszam} step="1" value={alapLetszam} inputmode="numeric" />
+    </div>
+    <div class="mezo">
+      <label for="kalk-ora" class="mezo-cimke">{k.ora}</label>
+      <input id="kalk-ora" type="number" class="bemenet" min="1" max={ar.kalkulator.max_ora} step="0.5" value={alapOra} inputmode="decimal" />
+    </div>
+  </div>
+  <dl class="mt-6 grid gap-2 border-t border-vonal pt-5 text-[0.9375rem]" aria-live="polite">
+    <div class="flex justify-between gap-4"><dt class="halvany">{k.oradij_resz}</dt><dd data-kalk="oradij">{forint(oradijResz)}</dd></div>
+    <div class="flex justify-between gap-4"><dt class="halvany">{k.kiallasi_resz}</dt><dd data-kalk="kiallasi">{forint(kiallasiResz)}</dd></div>
+    <div class="flex justify-between gap-4 border-t border-vonal pt-3 text-lg font-medium">
+      <dt>{k.osszesen}</dt><dd data-kalk="osszesen">{forint(oradijResz + kiallasiResz)}</dd>
+    </div>
+  </dl>
+  <p class="mezo-sugo mt-4">{k.megjegyzes}</p>
+  <div class="mt-2 flex flex-wrap gap-2 text-sm">
+    {!ar.jovahagyva && <span set:html={inline(ar.jovahagyas_megjegyzes, tok)} />}
+    <span set:html={inline(ar.afa, tok)} />
+  </div>
+</div>
+
+<script>
+  const doboz = document.querySelector<HTMLElement>('[data-kalkulator]');
+  if (doboz) {
+    doboz.hidden = false;
+    const oradij = Number(doboz.dataset.oradij);
+    const kiallasi = Number(doboz.dataset.kiallasi);
+    const letszam = doboz.querySelector<HTMLInputElement>('#kalk-letszam')!;
+    const ora = doboz.querySelector<HTMLInputElement>('#kalk-ora')!;
+    const ft = (n: number) => `${new Intl.NumberFormat('hu-HU', { useGrouping: 'always' }).format(Math.round(n))} Ft`;
+    const korlat = (v: number, min: number, max: number) => Math.min(Math.max(Number.isFinite(v) ? v : min, min), max);
+    const szamol = () => {
+      const l = korlat(Math.round(Number(letszam.value)), 1, Number(letszam.max));
+      const o = korlat(Number(ora.value), 1, Number(ora.max));
+      const kiir = (kulcs: string, n: number) => {
+        const el = doboz.querySelector(`[data-kalk="${kulcs}"]`);
+        if (el) el.textContent = ft(n);
+      };
+      kiir('oradij', oradij * l * o);
+      kiir('kiallasi', kiallasi * l);
+      kiir('osszesen', oradij * l * o + kiallasi * l);
+    };
+    letszam.addEventListener('input', szamol);
+    ora.addEventListener('input', szamol);
+  }
+</script>

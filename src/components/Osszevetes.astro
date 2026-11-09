@@ -1,0 +1,36 @@
+---
+/** „Ismerősökkel vagy csapattal?” – tárgyilagos összevetés. Mobilon kártyákká alakul. */
+import { inline, type Tokenek } from '../lib/szoveg';
+import type { Szekcio } from '../lib/tartalom';
+
+interface Props {
+  sz: Szekcio;
+  tok: Tokenek;
+}
+const { sz, tok } = Astro.props;
+const sorok = sz.sorok ?? [];
+---
+
+<div class="kartya overflow-hidden px-5 sm:px-0">
+  <table class="osszevetes" role="table">
+    <caption class="sr-only" set:html={inline(sz.cimke ?? sz.cim, tok)} />
+    <thead role="rowgroup">
+      <tr role="row">
+        <th scope="col" role="columnheader">{sz.oszlop_szempont}</th>
+        <th scope="col" role="columnheader">{sz.oszlop_ismeros}</th>
+        <th scope="col" role="columnheader" class="aura-oszlop">{sz.oszlop_aura}</th>
+      </tr>
+    </thead>
+    <tbody role="rowgroup">
+      {
+        sorok.map((s) => (
+          <tr role="row">
+            <th scope="row" role="rowheader" set:html={inline(s.szempont, tok)} />
+            <td role="cell" data-cimke={sz.oszlop_ismeros} set:html={inline(s.ismeros, tok)} />
+            <td role="cell" class="aura-oszlop" data-cimke={sz.oszlop_aura} set:html={inline(s.aura, tok)} />
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>

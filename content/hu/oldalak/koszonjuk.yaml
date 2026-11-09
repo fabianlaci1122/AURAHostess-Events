@@ -1,0 +1,29 @@
+# ─────────────────────────────────────────────────────────────
+#  KÖSZÖNJÜK – ide érkezik a látogató minden sikeres űrlap után.
+#  Itt mérjük a konverziót. A keresők nem indexelik.
+# ─────────────────────────────────────────────────────────────
+
+seo:
+  title: "Köszönjük! | AURA. Hostess & Events"
+  description: "Megkaptuk az üzenetét."
+  noindex: true
+
+hero:
+  cim: "Köszönjük!"
+
+szekciok:
+  ajanlatkeres:
+    cim: "Köszönjük, megkaptuk az ajánlatkérését!"
+    szoveg: "{Valaszido} jelentkezünk a megadott elérhetőségen. Az adatokról e-mailben visszaigazolást is küldünk."
+    megjegyzes: "Sürgős? Hívjon minket: {telefon}"
+  jelentkezes:
+    cim: "Köszönjük, megkaptuk a jelentkezésed!"
+    szoveg: "E-mailben visszaigazolást is küldünk. [[HIÁNYZIK: mikor és hogyan jelzünk vissza a jelentkezőknek]]"
+    megjegyzes: "Addig is nézz körül az Instagramunkon: {instagram_nev}"
+  kapcsolat:
+    cim: "Köszönjük, megkaptuk az üzenetét!"
+    szoveg: "{Valaszido} válaszolunk a megadott e-mail-címre."
+    megjegyzes: "Sürgős? Hívjon minket: {telefon}"
+  tovabb:
+    cim: "Addig is"
+    link_szoveg: "Vissza a főoldalra"

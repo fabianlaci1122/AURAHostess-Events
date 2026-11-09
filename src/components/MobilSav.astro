@@ -1,0 +1,18 @@
+---
+import Ikon from './Ikon.astro';
+import { telHref } from '../lib/szoveg';
+import type { alap } from '../lib/tartalom';
+
+interface Props {
+  ctaHref: string;
+  a: Awaited<ReturnType<typeof alap>>;
+}
+const { ctaHref, a } = Astro.props;
+---
+
+<nav class="mobil-sav" aria-label={a.felulet.mobil_sav} data-mobil-sav>
+  <a href={telHref(a.ceg.telefon)} class="gomb gomb-korvonal-vilagos !px-3" data-hely="mobil-sav">
+    <Ikon nev="telefon" meret={18} />{a.felulet.gombok.hivas_rovid}
+  </a>
+  <a href={ctaHref} class="gomb gomb-bronz !px-3">{a.felulet.gombok.ajanlat}</a>
+</nav>

@@ -1,0 +1,24 @@
+---
+import Ikon from './Ikon.astro';
+import { inline, type Tokenek } from '../lib/szoveg';
+
+interface Props {
+  pontok: string[];
+  tok: Tokenek;
+  class?: string;
+}
+const { pontok, tok, class: osztaly } = Astro.props;
+---
+
+<ul class:list={['grid gap-4', osztaly]} role="list">
+  {
+    pontok.map((p) => (
+      <li class="flex items-start gap-3.5">
+        <span class="mt-0.5 inline-grid h-6 w-6 shrink-0 place-items-center rounded-full border border-bronz text-bronz-mely">
+          <Ikon nev="pipa" meret={14} />
+        </span>
+        <span set:html={inline(p, tok)} />
+      </li>
+    ))
+  }
+</ul>

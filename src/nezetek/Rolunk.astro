@@ -1,0 +1,71 @@
+---
+import Base from '../layouts/Base.astro';
+import Adatlap from '../components/Adatlap.astro';
+import AlHero from '../components/AlHero.astro';
+import ElemRacs from '../components/ElemRacs.astro';
+import FotoHely from '../components/FotoHely.astro';
+import Savok from '../components/Savok.astro';
+import SzekcioFej from '../components/SzekcioFej.astro';
+import { ut, type Nyelv } from '../i18n/utak';
+import { alap, oldal, szekcio } from '../lib/tartalom';
+import { morzsaSema } from '../lib/seo';
+import { inline } from '../lib/szoveg';
+
+interface Props {
+  lang: Nyelv;
+}
+const { lang } = Astro.props;
+const kulcs = 'rolunk';
+const a = await alap(lang);
+const { felulet: f, ceg, tok } = a;
+const o = await oldal(lang, kulcs);
+const sz = (k: string) => szekcio(o, k, lang, kulcs);
+const site = Astro.site!;
+const morzsa = [
+  { nev: f.morzsa.fooldal, href: ut('fooldal', lang) },
+  { nev: o.hero.cim, href: ut(kulcs, lang) },
+];
+const tulaj = sz('tulajdonos');
+const adatlap = sz('adatlap');
+---
+
+<Base lang={lang} kulcs={kulcs} title={o.seo.title} description={o.seo.description} a={a} jsonld={[morzsaSema(morzsa, site)]}>
+  <AlHero cim={o.hero.cim} alcim={o.hero.alcim} morzsa={morzsa} tok={tok} f={f} />
+
+  <section class="szekcio" aria-labelledby="tulaj-cim">
+    <div class="tarolo grid gap-12 lg:grid-cols-12 lg:gap-16">
+      <div class="lg:col-span-5">
+        <FotoHely foto={tulaj.foto} arany="4 / 5" meretek="(min-width: 1024px) 38vw, 100vw" />
+      </div>
+      <div class="lg:col-span-7 lg:pt-6">
+        <p class="cimke" set:html={inline(tulaj.cimke, tok)} />
+        <h2 id="tulaj-cim" class="h2 mt-4" set:html={inline(tulaj.cim, tok)} />
+        {tulaj.szoveg && <p class="mt-6 text-lg" set:html={inline(tulaj.szoveg, tok)} />}
+        {tulaj.megjegyzes && <p class="mt-6 border-l-2 border-bronz pl-5 text-lg" set:html={inline(tulaj.megjegyzes, tok)} />}
+        <Adatlap
+          cim={adatlap.cim ?? ''}
+          alcim={adatlap.szoveg}
+          sorok={(adatlap.elemek ?? []).map((e) => ({ cim: e.cim, szoveg: e.szoveg ?? '' }))}
+          tok={tok}
+          class="mt-10 max-w-lg !shadow-[0_1.5rem_3rem_-1.75rem_rgb(0_0_0/0.35)]"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="szekcio hatter-homok" aria-labelledby="ertekek-cim">
+    <div class="tarolo">
+      <SzekcioFej id="ertekek-cim" cimke={sz('ertekek').cimke} cim={sz('ertekek').cim} tok={tok} />
+      <ElemRacs elemek={sz('ertekek').elemek ?? []} oszlop={3} tok={tok} class="mt-12" />
+    </div>
+  </section>
+
+  <section class="szekcio-szuk">
+    <p class="tarolo text-center font-display text-[clamp(2rem,1.4rem+2.6vw,3.4rem)] leading-tight font-semibold italic" lang="en">
+      {sz('motto').szoveg}
+    </p>
+  </section>
+
+  <Savok tipus="cta" cim={sz('cta').cim ?? ''} szoveg={sz('cta').szoveg} href={`${ut('fooldal', lang)}#ajanlatkeres`} telefon={ceg.telefon} tok={tok} f={f} />
+  <Savok tipus="toborzo" cim={f.menu.jelentkezes} href={ut('jelentkezes', lang)} tok={tok} f={f} />
+</Base>

@@ -1,0 +1,118 @@
+# ─────────────────────────────────────────────────────────────
+#  FŐOLDAL
+#  seo.title: max. 70 karakter · seo.description: max. 170 karakter
+# ─────────────────────────────────────────────────────────────
+
+seo:
+  title: "Hostess Pécs – bejelentett hostess-csapat rendezvényekre | AURA."
+  description: "Felkészített, bejelentett hostessek konferenciára, gálára, VIP-fogadásra és előadóestre Pécsen és Baranyában. Számlával, írásos eligazítással, tartalékkal."
+
+hero:
+  cimke: "Pécs és Baranya · 5+ éve"
+  cim: "Hostess-csapat pécsi rendezvényekre"
+  alcim: "Egy hívás, és ott van a felkészített, bejelentett hostess-csapat a pécsi rendezvényén – számlával, pontos feladatlistával."
+  bizalmi:
+    - "Bejelentett munkavállalók"
+    - "Számlával"
+    - "Írásos eligazítás"
+    - "Tartalék hostess"
+  foto:
+    leiras: "FOTÓ: hostess-csapat a regisztrációs pultnál, saját konferencia"
+  # A hero „eligazítás” kártyája: mit tartalmaz minden munka előtt az írásos eligazítás
+  eligazitas:
+    cim: "Eligazítás"
+    alcim: "Minden munka előtt, írásban"
+    sorok:
+      - cim: "Hely"
+        szoveg: "pontos cím, bejárat, pult"
+      - cim: "Idő"
+        szoveg: "érkezés, kezdés, zárás"
+      - cim: "Feladat"
+        szoveg: "ki mit csinál, hol áll"
+      - cim: "Öltözet"
+        szoveg: "ahogy Önnel egyeztettük"
+      - cim: "Kapcsolattartó"
+        szoveg: "név és telefonszám a helyszínen"
+
+szekciok:
+  szolgaltatasok:
+    cimke: "Szolgáltatások"
+    cim: "Miben segítünk?"
+    elemek:
+      - cim: "Rendezvény- és konferencia-hostess"
+        szoveg: "Konferencia, gála, VIP-fogadás, intézményi rendezvény. Regisztráció, vendégfogadás, irányítás és protokoll – írásos eligazítás alapján."
+        oldal: rendezveny
+        link_szoveg: "Rendezvény-hostess részletei"
+        foto:
+          leiras: "FOTÓ: regisztrációs pult, saját konferencia"
+      - cim: "Beléptetés előadóestekre"
+        szoveg: "Állandó beléptető csapat turnéknak és pécsi helyszíneknek. Jegyellenőrzés, helyre kísérés, ruhatár – mindig ugyanazokkal az emberekkel."
+        oldal: eloadoest
+        link_szoveg: "Az előadóest-csomag részletei"
+        foto:
+          leiras: "FOTÓ: jegyellenőrzés egy előadóest bejáratánál"
+
+  hogyan:
+    cimke: "Hogyan dolgozunk"
+    cim: "Négy lépés az ajánlatkéréstől a helyszínig"
+    elemek:
+      - cim: "Ajánlatkérés"
+        szoveg: "Kitölti az űrlapot, vagy felhív minket. Az induláshoz elég a dátum, a helyszín és a rendezvény típusa."
+      - cim: "Visszajelzés"
+        szoveg: "{Valaszido} jelentkezünk, és egyeztetjük a részleteket."
+      - cim: "Ajánlat és eligazítás"
+        szoveg: "Írásos ajánlatot küldünk. Elfogadás után minden hostess írásos eligazítást kap."
+      - cim: "Csapat a helyszínen"
+        szoveg: "A felkészített csapat ott van a rendezvényén. Ha valaki kiesik, tartalék hostess pótolja."
+
+  miert:
+    cimke: "Miért az AURA."
+    cim: "Amire egy rendezvényszervező számíthat"
+    elemek:
+      - cim: "Bejelentett csapat, számlával"
+        szoveg: "Hostesseinket egyszerűsített foglalkoztatással, bejelentve alkalmazzuk. Ön a megbízásról számlát kap."
+        ikon: szamla
+      - cim: "Írásos eligazítás minden munka előtt"
+        szoveg: "Hely, idő, feladat, öltözet, kapcsolattartó – leírva, mielőtt bárki elindul. Nem a helyszínen derül ki, ki mit csinál."
+        ikon: dokumentum
+      - cim: "Tartalék hostess"
+        szoveg: "Ha valaki kiesik, van pótlás. Önnek nem kell az utolsó percben embert keresnie."
+        ikon: csere
+      - cim: "Állandó csapat"
+        szoveg: "Visszatérő partnereinkhez ugyanaz a csapat jár, amely már ismeri a helyszínt és a menetet."
+        ikon: csapat
+
+  osszevetes:
+    cimke: "Ismerősökkel vagy csapattal?"
+    cim: "Ismerősökkel is meg lehet oldani. Ezt teszi hozzá egy felkészített csapat."
+    oszlop_szempont: "Szempont"
+    oszlop_ismeros: "Ismerősökkel"
+    oszlop_aura: "AURA. csapattal"
+    sorok:
+      - szempont: "Bejelentés"
+        ismeros: "Önnek kell megoldania"
+        aura: "Bejelentett munkavállalók"
+      - szempont: "Számla"
+        ismeros: "Külön kell megoldani"
+        aura: "Számla a megbízásról"
+      - szempont: "Felkészítés"
+        ismeros: "Szóbeli megbeszélés"
+        aura: "Írásos eligazítás minden munka előtt"
+      - szempont: "Ha valaki lemondja"
+        ismeros: "Önnek kell pótlást keresnie"
+        aura: "Tartalék hostess"
+
+  referenciak:
+    cimke: "Referenciák"
+    cim: "Rendezvények, ahol már dolgoztunk"
+    bevezeto: "Konferenciák, gálák, intézményi rendezvények és előadóestek Pécsen és környékén."
+    link_szoveg: "Összes referencia"
+    megjegyzes: "Megbízóink logói – engedéllyel"
+
+  gyik:
+    cimke: "GYIK"
+    cim: "Gyakori kérdések"
+
+  toborzo:
+    cim: "Hostess-munka Pécsen"
+    szoveg: "Bejelentett munka, írásos eligazítás, rendszeres munka a szezonban."

@@ -1,0 +1,100 @@
+---
+import '../styles/global.css';
+import { Font } from 'astro:assets';
+import { PUBLIC_PLAUSIBLE_DOMAIN, PUBLIC_PLAUSIBLE_SRC } from 'astro:env/client';
+import Fejlec from '../components/Fejlec.astro';
+import Lablec from '../components/Lablec.astro';
+import MobilSav from '../components/MobilSav.astro';
+import { HTML_LANG, NYELVEK, OG_LOCALE, nyelviValtozatok, ut, type Nyelv, type OldalKulcs } from '../i18n/utak';
+import type { alap } from '../lib/tartalom';
+import { sima } from '../lib/szoveg';
+
+interface Props {
+  lang: Nyelv;
+  kulcs: OldalKulcs;
+  title: string;
+  description: string;
+  noindex?: boolean;
+  jsonld?: (Record<string, unknown> | null | undefined)[];
+  /** Van-e ajánlatkérő űrlap ezen az oldalon (a CTA ide ugrik, nem a főoldalra). */
+  vanUrlap?: boolean;
+  mobilSav?: boolean;
+  a: Awaited<ReturnType<typeof alap>>;
+}
+
+const { lang, kulcs, title, description, noindex = false, jsonld = [], vanUrlap = false, mobilSav = true, a } = Astro.props;
+const site = Astro.site!;
+const kanonikus = new URL(ut(kulcs, lang), site).href;
+const ogKep = new URL('/og/aura-alap.png', site).href;
+const ctaHref = vanUrlap ? '#ajanlatkeres' : `${ut('fooldal', lang)}#ajanlatkeres`;
+const lablecLeiras = sima(description, a.tok);
+const adatok = jsonld.filter((j): j is Record<string, unknown> => !!j);
+---
+
+<!doctype html>
+<html lang={HTML_LANG[lang]}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={lablecLeiras} />
+    {noindex ? <meta name="robots" content="noindex, follow" /> : <link rel="canonical" href={kanonikus} />}
+    {
+      !noindex &&
+        NYELVEK.length > 1 &&
+        nyelviValtozatok(kulcs).map((v) => (
+          <link rel="alternate" hreflang={HTML_LANG[v.lang]} href={new URL(v.ut, site).href} />
+        ))
+    }
+    {!noindex && NYELVEK.length > 1 && <link rel="alternate" hreflang="x-default" href={new URL(ut(kulcs), site).href} />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={OG_LOCALE[lang]} />
+    <meta property="og:site_name" content={a.ceg.nev} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={lablecLeiras} />
+    <meta property="og:url" content={kanonikus} />
+    <meta property="og:image" content={ogKep} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${a.ceg.nev} – hostess-csapat pécsi rendezvényekre`} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <meta name="theme-color" content="#0e0d0c" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- Minden betűfájl előre töltődik, így egyszerre érkeznek (kevesebb újratördelés betöltéskor) -->
+    <Font cssVariable="--font-cormorant" preload />
+    <Font cssVariable="--font-jost" preload />
+
+    {adatok.map((j) => <script type="application/ld+json" set:html={JSON.stringify(j)} />)}
+
+    {
+      PUBLIC_PLAUSIBLE_DOMAIN && (
+        <>
+          <script is:inline>
+            window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments); };
+          </script>
+          <script defer data-domain={PUBLIC_PLAUSIBLE_DOMAIN} src={PUBLIC_PLAUSIBLE_SRC} />
+        </>
+      )
+    }
+  </head>
+  <body class:list={[!mobilSav && 'nincs-mobil-sav']}>
+    <a href="#tartalom" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-elefant focus:px-4 focus:py-3 focus:text-tinta">
+      {a.felulet.ugras_tartalomra}
+    </a>
+    <Fejlec lang={lang} kulcs={kulcs} ctaHref={ctaHref} a={a} />
+    <main id="tartalom" tabindex="-1" class="outline-none">
+      <slot />
+    </main>
+    <Lablec lang={lang} a={a} />
+    {mobilSav && <MobilSav ctaHref={ctaHref} a={a} />}
+    <script>
+      import '../scripts/alap';
+    </script>
+  </body>
+</html>

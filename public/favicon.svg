@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Ideiglenes ikon: a logó vektoros fájljából cserélendő -->
+  <rect width="64" height="64" rx="12" fill="#0e0d0c"/>
+  <path d="M15.5 49 31 13" stroke="#faf7f2" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M31 13 45.5 49" stroke="#faf7f2" stroke-width="6" stroke-linecap="round"/>
+  <path d="M21 36.5h19" stroke="#faf7f2" stroke-width="2.2"/>
+  <path d="M11.5 49h9M40 49h11" stroke="#faf7f2" stroke-width="2"/>
+  <circle cx="54" cy="47.5" r="3" fill="#a97c3f"/>
+</svg>

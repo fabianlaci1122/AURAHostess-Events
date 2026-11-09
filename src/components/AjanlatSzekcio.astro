@@ -1,0 +1,63 @@
+---
+/** Az ajánlatkérő szekció: bal oldalt mi történik ezután + közvetlen elérés, jobb oldalt az űrlap. */
+import AjanlatUrlap from './urlap/AjanlatUrlap.astro';
+import Ikon from './Ikon.astro';
+import { inline, mailHref, telHref } from '../lib/szoveg';
+import type { alap, Szekcio } from '../lib/tartalom';
+import type { Nyelv, OldalKulcs } from '../i18n/utak';
+
+interface Props {
+  lang: Nyelv;
+  kulcs: OldalKulcs;
+  a: Awaited<ReturnType<typeof alap>>;
+  sz?: Szekcio;
+  tipusAlap?: string;
+}
+const { lang, kulcs, a, sz, tipusAlap } = Astro.props;
+const { felulet: f, ceg, tok } = a;
+const s = f.ajanlat_szekcio;
+const cim = sz?.cim ?? s.cim;
+const bevezeto = sz?.bevezeto ?? s.bevezeto;
+---
+
+<section id="ajanlatkeres" class="szekcio hatter-homok" aria-labelledby="ajanlat-cim">
+  <div class="tarolo grid gap-12 lg:grid-cols-12 lg:gap-16">
+    <div class="lg:col-span-5">
+      <p class="cimke" set:html={inline(sz?.cimke ?? s.cimke, tok)} />
+      <h2 id="ajanlat-cim" class="h2 mt-4" set:html={inline(cim, tok)} />
+      <p class="bevezeto mt-5" set:html={inline(bevezeto, tok)} />
+
+      <h3 class="h3 mt-10">{s.utana_cim}</h3>
+      <ol class="mt-4 grid gap-3" role="list">
+        {
+          s.utana.map((lepes, i) => (
+            <li class="grid grid-cols-[2rem_1fr] items-baseline gap-2">
+              <span class="font-display text-2xl leading-none font-semibold text-bronz-mely" aria-hidden="true">{i + 1}</span>
+              <span set:html={inline(lepes, tok)} />
+            </li>
+          ))
+        }
+      </ol>
+
+      <div class="mt-10 border-t border-vonal pt-8">
+        <h3 class="h3">{s.kozvetlen_cim}</h3>
+        <ul class="mt-4 grid gap-2" role="list">
+          <li>
+            <a href={telHref(ceg.telefon)} class="inline-flex min-h-11 items-center gap-3 font-medium hover:text-bronz-mely" data-hely="ajanlat-szekcio">
+              <Ikon nev="telefon" meret={20} class="text-bronz-mely" /><span class="sr-only">{s.telefon}: </span><span set:html={inline(ceg.telefon)} />
+            </a>
+          </li>
+          <li>
+            <a href={mailHref(ceg.email)} class="inline-flex min-h-11 items-center gap-3 font-medium hover:text-bronz-mely" data-hely="ajanlat-szekcio">
+              <Ikon nev="email" meret={20} class="text-bronz-mely" /><span class="sr-only">{s.email}: </span><span set:html={inline(ceg.email)} />
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="lg:col-span-7">
+      <AjanlatUrlap lang={lang} kulcs={kulcs} a={a} tipusAlap={tipusAlap} />
+    </div>
+  </div>
+</section>

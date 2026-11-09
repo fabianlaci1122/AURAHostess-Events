@@ -1,0 +1,125 @@
+---
+import Base from '../layouts/Base.astro';
+import AjanlatSzekcio from '../components/AjanlatSzekcio.astro';
+import AlHero from '../components/AlHero.astro';
+import Csomag from '../components/Csomag.astro';
+import ElemRacs from '../components/ElemRacs.astro';
+import Gyik from '../components/Gyik.astro';
+import Kalkulator from '../components/Kalkulator.astro';
+import Pontlista from '../components/Pontlista.astro';
+import SzekcioFej from '../components/SzekcioFej.astro';
+import { ut, type Nyelv } from '../i18n/utak';
+import { alap, gyik, oldal, szekcio } from '../lib/tartalom';
+import { gyikSema, morzsaSema } from '../lib/seo';
+import { forint, inline, szam } from '../lib/szoveg';
+
+interface Props {
+  lang: Nyelv;
+}
+const { lang } = Astro.props;
+const kulcs = 'arak';
+const a = await alap(lang);
+const { felulet: f, ceg, tok, arazas: ar } = a;
+const o = await oldal(lang, kulcs);
+const sz = (k: string) => szekcio(o, k, lang, kulcs);
+const kerdesek = await gyik(lang, kulcs);
+const site = Astro.site!;
+const morzsa = [
+  { nev: f.morzsa.fooldal, href: ut('fooldal', lang) },
+  { nev: o.hero.cimke ?? o.hero.cim, href: ut(kulcs, lang) },
+];
+const ketResz = sz('ket_resz');
+const pelda = sz('pelda');
+const fugg = sz('fugg');
+const csomag = sz('csomag');
+const p = ar.pelda;
+const peldaOradij = ar.oradij * p.letszam * p.ora;
+const peldaKiallasi = ar.kiallasi_dij * p.letszam;
+const peldaTok = { ...tok, letszam: szam(p.letszam), ora: szam(p.ora) };
+const egysegek = [`/ fő / óra`, `/ fő / alkalom`];
+const osszegek = [ar.oradij, ar.kiallasi_dij];
+---
+
+<Base lang={lang} kulcs={kulcs} title={o.seo.title} description={o.seo.description} vanUrlap a={a} jsonld={[gyikSema(kerdesek, tok), morzsaSema(morzsa, site)]}>
+  <AlHero cimke={o.hero.cimke} cim={o.hero.cim} alcim={o.hero.alcim} morzsa={morzsa} gombok={{ ajanlat: '#ajanlatkeres', telefon: ceg.telefon }} tok={tok} f={f} />
+
+  <section class="szekcio" aria-labelledby="ket-resz-cim">
+    <div class="tarolo">
+      <SzekcioFej id="ket-resz-cim" cimke={ketResz.cimke} cim={ketResz.cim} tok={tok} />
+      <ul class="mt-12 grid gap-6 md:grid-cols-2" role="list">
+        {
+          (ketResz.elemek ?? []).map((e, i) => (
+            <li class="kartya flex flex-col p-6 sm:p-10">
+              <h3 class="cimke" set:html={inline(e.cim, tok)} />
+              <p class="mt-6 flex flex-wrap items-baseline gap-x-3">
+                <span class="font-display text-[clamp(2.75rem,2rem+3vw,4rem)] leading-none font-semibold">{forint(osszegek[i] ?? 0)}</span>
+                <span class="halvany">{egysegek[i]}</span>
+              </p>
+              {e.szoveg && <p class="halvany mt-5" set:html={inline(e.szoveg, tok)} />}
+            </li>
+          ))
+        }
+      </ul>
+      <div class="mt-5 flex flex-wrap gap-2 text-sm">
+        {!ar.jovahagyva && <span set:html={inline(ar.jovahagyas_megjegyzes, tok)} />}
+        <span set:html={inline(ar.afa, tok)} />
+      </div>
+    </div>
+  </section>
+
+  <section class="szekcio hatter-homok" aria-labelledby="pelda-cim">
+    <div class="tarolo grid gap-12 lg:grid-cols-2 lg:gap-16">
+      <div>
+        <SzekcioFej id="pelda-cim" cimke={pelda.cimke} cim={pelda.cim} tok={tok} />
+        <p class="mt-6 text-lg" set:html={inline(pelda.szoveg, peldaTok)} />
+        <table class="mt-6 w-full border-collapse text-left text-[0.9375rem]">
+          <caption class="sr-only" set:html={inline(pelda.cim, tok)} />
+          <tbody>
+            <tr class="border-b border-vonal">
+              <th scope="row" class="py-3 pr-4 font-normal halvany">{szam(p.letszam)} × {szam(p.ora)} óra × {forint(ar.oradij)}</th>
+              <td class="py-3 text-right">{forint(peldaOradij)}</td>
+            </tr>
+            <tr class="border-b border-vonal">
+              <th scope="row" class="py-3 pr-4 font-normal halvany">{szam(p.letszam)} × {forint(ar.kiallasi_dij)} kiállási díj</th>
+              <td class="py-3 text-right">{forint(peldaKiallasi)}</td>
+            </tr>
+            <tr>
+              <th scope="row" class="py-4 pr-4 text-lg font-medium">{f.kalkulator.osszesen}</th>
+              <td class="py-4 text-right font-display text-3xl font-semibold">{forint(peldaOradij + peldaKiallasi)}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div><Kalkulator ar={ar} f={f} tok={tok} /></div>
+    </div>
+  </section>
+
+  <section class="szekcio" aria-labelledby="fugg-cim">
+    <div class="tarolo grid gap-12 lg:grid-cols-12 lg:items-start">
+      <div class="lg:col-span-5">
+        <SzekcioFej id="fugg-cim" cimke={fugg.cimke !== fugg.cim ? fugg.cimke : undefined} cim={fugg.cim} tok={tok} />
+        <Pontlista pontok={fugg.pontok ?? []} tok={tok} class="mt-8" />
+      </div>
+      <div class="lg:col-span-7">
+        <p class="cimke mb-5" set:html={inline(csomag.cimke, tok)} />
+        <Csomag ar={ar} tok={tok} f={f} href={ut('eloadoest', lang)} gombSzoveg={csomag.link_szoveg} />
+      </div>
+    </div>
+  </section>
+
+  <section class="szekcio hatter-homok" aria-labelledby="mukodes-cim">
+    <div class="tarolo">
+      <SzekcioFej id="mukodes-cim" cimke={sz('mukodes').cimke} cim={sz('mukodes').cim} tok={tok} />
+      <ElemRacs elemek={sz('mukodes').elemek ?? []} oszlop={3} tok={tok} class="mt-12" />
+    </div>
+  </section>
+
+  <section class="szekcio" aria-labelledby="gyik-cim">
+    <div class="tarolo grid gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-4"><SzekcioFej id="gyik-cim" cimke={sz('gyik').cimke} cim={sz('gyik').cim} tok={tok} /></div>
+      <div class="lg:col-span-8"><Gyik kerdesek={kerdesek} tok={tok} /></div>
+    </div>
+  </section>
+
+  <AjanlatSzekcio lang={lang} kulcs={kulcs} a={a} sz={sz('ajanlat')} />
+</Base>

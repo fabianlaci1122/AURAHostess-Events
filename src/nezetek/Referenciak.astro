@@ -1,0 +1,64 @@
+---
+import Base from '../layouts/Base.astro';
+import AlHero from '../components/AlHero.astro';
+import Ikon from '../components/Ikon.astro';
+import LogoSav from '../components/LogoSav.astro';
+import ReferenciaKartya from '../components/ReferenciaKartya.astro';
+import Savok from '../components/Savok.astro';
+import SzekcioFej from '../components/SzekcioFej.astro';
+import { ut, type Nyelv } from '../i18n/utak';
+import { alap, oldal, referenciak, szekcio } from '../lib/tartalom';
+import { morzsaSema } from '../lib/seo';
+import { inline } from '../lib/szoveg';
+
+interface Props {
+  lang: Nyelv;
+}
+const { lang } = Astro.props;
+const kulcs = 'referenciak';
+const a = await alap(lang);
+const { felulet: f, ceg, tok } = a;
+const o = await oldal(lang, kulcs);
+const sz = (k: string) => szekcio(o, k, lang, kulcs);
+const ref = await referenciak(lang, kulcs);
+const site = Astro.site!;
+const morzsa = [
+  { nev: f.morzsa.fooldal, href: ut('fooldal', lang) },
+  { nev: o.hero.cim, href: ut(kulcs, lang) },
+];
+const ig = sz('instagram');
+---
+
+<Base lang={lang} kulcs={kulcs} title={o.seo.title} description={o.seo.description} a={a} jsonld={[morzsaSema(morzsa, site)]}>
+  <AlHero cim={o.hero.cim} alcim={o.hero.alcim} morzsa={morzsa} tok={tok} f={f} />
+
+  <section class="szekcio" aria-labelledby="esetek-cim">
+    <div class="tarolo">
+      <SzekcioFej id="esetek-cim" cimke={sz('esetek').cimke} cim={sz('esetek').cim} tok={tok} />
+      <ul class="mt-12 grid gap-8" role="list">
+        {ref.esetek.map((r) => <li><ReferenciaKartya r={r} tok={tok} szeles /></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="szekcio hatter-homok" aria-labelledby="logok-cim">
+    <div class="tarolo">
+      <SzekcioFej id="logok-cim" cimke={sz('logok').cimke} cim={sz('logok').cim} bevezeto={sz('logok').megjegyzes} tok={tok} />
+      <div class="mt-4"><LogoSav logok={ref.logok} helyorzok={ref.logoHelyorzok} /></div>
+    </div>
+  </section>
+
+  <section class="szekcio-szuk" aria-labelledby="ig-cim">
+    <div class="tarolo flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <h2 id="ig-cim" class="h3-display" set:html={inline(ig.cim, tok)} />
+        {ig.szoveg && <p class="halvany mt-1" set:html={inline(ig.szoveg, tok)} />}
+      </div>
+      <a href={ceg.instagram} class="gomb gomb-korvonal shrink-0" data-hely="referenciak" rel="noopener">
+        <Ikon nev="instagram" meret={18} />{ceg.instagram_nev}
+      </a>
+    </div>
+  </section>
+
+  <Savok tipus="cta" cim={sz('cta').cim ?? ''} szoveg={sz('cta').szoveg} href={`${ut('fooldal', lang)}#ajanlatkeres`} telefon={ceg.telefon} tok={tok} f={f} />
+</Base>

@@ -1,0 +1,11 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "24"
+
+# Éles telepítésnél a build leáll, ha maradt [[HIÁNYZIK]] helyőrző vagy nincs SITE_URL.
+# Előnézeti (deploy preview / branch) telepítésnél a helyőrzők látszanak, és a robots.txt mindent tilt.
+[context.production]
+  command = "npm run build:eles"

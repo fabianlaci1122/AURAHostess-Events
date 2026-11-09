@@ -1,0 +1,64 @@
+---
+/** Hostess-jelentkezés – tegező oldal. */
+import Base from '../layouts/Base.astro';
+import AlHero from '../components/AlHero.astro';
+import ElemRacs from '../components/ElemRacs.astro';
+import SzekcioFej from '../components/SzekcioFej.astro';
+import JelentkezesUrlap from '../components/urlap/JelentkezesUrlap.astro';
+import { ut, type Nyelv } from '../i18n/utak';
+import { alap, oldal, szekcio } from '../lib/tartalom';
+import { morzsaSema } from '../lib/seo';
+import { inline } from '../lib/szoveg';
+
+interface Props {
+  lang: Nyelv;
+}
+const { lang } = Astro.props;
+const kulcs = 'jelentkezes';
+const a = await alap(lang);
+const { felulet: f, tok } = a;
+const o = await oldal(lang, kulcs);
+const sz = (k: string) => szekcio(o, k, lang, kulcs);
+const site = Astro.site!;
+const morzsa = [
+  { nev: f.morzsa.fooldal, href: ut('fooldal', lang) },
+  { nev: o.hero.cim, href: ut(kulcs, lang) },
+];
+const kapsz = sz('kapsz');
+const urlap = sz('urlap');
+---
+
+<Base lang={lang} kulcs={kulcs} title={o.seo.title} description={o.seo.description} mobilSav={false} a={a} jsonld={[morzsaSema(morzsa, site)]}>
+  <AlHero cimke={o.hero.cimke} cim={o.hero.cim} alcim={o.hero.alcim} foto={o.hero.foto} morzsa={morzsa} egyediGomb={{ szoveg: urlap.cim ?? '', href: '#jelentkezes' }} tok={tok} f={f} />
+
+  <section class="szekcio" aria-labelledby="elvarasok-cim">
+    <div class="tarolo">
+      <SzekcioFej id="elvarasok-cim" cimke={sz('elvarasok').cimke} cim={sz('elvarasok').cim} bevezeto={sz('elvarasok').bevezeto} tok={tok} />
+      <ElemRacs elemek={sz('elvarasok').elemek ?? []} oszlop={3} tok={tok} class="mt-12" />
+    </div>
+  </section>
+
+  <section class="szekcio hatter-homok" aria-labelledby="kapsz-cim">
+    <div class="tarolo">
+      <SzekcioFej id="kapsz-cim" cimke={kapsz.cimke} cim={kapsz.cim} tok={tok} />
+      <ElemRacs elemek={kapsz.elemek ?? []} oszlop={3} tok={tok} class="mt-12" />
+      {kapsz.megjegyzes && <p class="mt-10 text-sm" set:html={inline(kapsz.megjegyzes, tok)} />}
+    </div>
+  </section>
+
+  <section class="szekcio-szuk border-b border-vonal" aria-labelledby="folyamat-cim">
+    <div class="tarolo grid gap-6 lg:grid-cols-12">
+      <div class="lg:col-span-5"><SzekcioFej id="folyamat-cim" cimke={sz('folyamat').cimke} cim={sz('folyamat').cim} tok={tok} /></div>
+      <p class="text-lg lg:col-span-7 lg:pt-10" set:html={inline(sz('folyamat').szoveg, tok)} />
+    </div>
+  </section>
+
+  <section id="jelentkezes" class="szekcio hatter-homok" aria-labelledby="urlap-cim">
+    <div class="tarolo grid gap-12 lg:grid-cols-12 lg:gap-16">
+      <div class="lg:col-span-4">
+        <SzekcioFej id="urlap-cim" cimke={urlap.cimke} cim={urlap.cim} bevezeto={urlap.bevezeto} tok={tok} />
+      </div>
+      <div class="lg:col-span-8"><JelentkezesUrlap lang={lang} kulcs={kulcs} a={a} /></div>
+    </div>
+  </section>
+</Base>

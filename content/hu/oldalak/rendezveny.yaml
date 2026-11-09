@@ -1,0 +1,98 @@
+# ─────────────────────────────────────────────────────────────
+#  RENDEZVÉNY- ÉS KONFERENCIA-HOSTESS PÉCSEN
+# ─────────────────────────────────────────────────────────────
+
+seo:
+  title: "Rendezvény- és konferencia-hostess Pécsen | AURA. Hostess & Events"
+  description: "Hostess konferenciára, gálára, VIP-fogadásra és intézményi rendezvényre Pécsen. Regisztráció, vendégfogadás, protokoll – bejelentett csapat, számlával."
+
+hero:
+  cim: "Rendezvény- és konferencia-hostess Pécsen"
+  alcim: "Egy hívás, és ott van a felkészített, bejelentett hostess-csapat a pécsi rendezvényén – számlával, pontos feladatlistával."
+  foto:
+    leiras: "FOTÓ: vendégfogadás egy gálán, saját rendezvény"
+
+szekciok:
+  tipusok:
+    cimke: "Rendezvénytípusok"
+    cim: "Milyen rendezvényekre?"
+    elemek:
+      - cim: "Konferencia"
+        szoveg: "Regisztrációs pult, vendégfogadás, irányítás a termek között."
+        foto:
+          leiras: "FOTÓ: regisztrációs pult, saját konferencia"
+      - cim: "Gála"
+        szoveg: "Vendégfogadás, helyre kísérés, protokoll."
+        foto:
+          leiras: "FOTÓ: vendégfogadás egy gálán"
+      - cim: "VIP-fogadás"
+        szoveg: "Személyes vendégfogadás és protokollfeladatok."
+        foto:
+          leiras: "FOTÓ: VIP-fogadás, saját rendezvény"
+      - cim: "Intézményi rendezvény"
+        szoveg: "Egyetemi, önkormányzati és közintézményi események: regisztráció, irányítás, protokoll."
+        foto:
+          leiras: "FOTÓ: intézményi rendezvény, saját munka"
+
+  feladatok:
+    cimke: "Feladatok"
+    cim: "Mit csinálnak a hostessek?"
+    elemek:
+      - cim: "Regisztráció"
+        szoveg: "Fogadják és regisztrálják a résztvevőket a regisztrációs pultnál."
+        ikon: regisztracio
+      - cim: "Vendégfogadás"
+        szoveg: "Ők az első arc, akivel a vendég találkozik: köszöntik és útbaigazítják."
+        ikon: vendeg
+      - cim: "Irányítás"
+        szoveg: "Eligazítják a vendégeket a helyszínen: termek, ruhatár, mosdó, kijáratok."
+        ikon: iranyitas
+      - cim: "Protokoll"
+        szoveg: "Segítenek a protokollfeladatokban, például a díszvendégek fogadásában és kísérésében."
+        ikon: protokoll
+    megjegyzes: "A pontos feladatlistát az írásos eligazítás rögzíti, így a helyszínen nincs találgatás."
+
+  arban:
+    cimke: "Árak"
+    cim: "Mi van az árban?"
+    pontok:
+      - "A hostessek munkaideje (óradíj: {oradij}/fő/óra)"
+      - "Kiállási díj ({kiallasi_dij}/fő/alkalom) – a napi bejelentés költsége"
+      - "Írásos eligazítás minden hostessnek"
+      - "Tartalék hostess megszervezése, ha valaki kiesik"
+      - "Számla a megbízásról"
+    link_szoveg: "Árak és számolási példa"
+
+  menete:
+    cimke: "Egy megbízás menete"
+    cim: "Így zajlik egy megbízás"
+    elemek:
+      - cim: "Ajánlatkérés"
+        szoveg: "Űrlapon vagy telefonon. Dátum, helyszín, rendezvénytípus – ennyi elég az induláshoz."
+      - cim: "Egyeztetés"
+        szoveg: "{Valaszido} jelentkezünk. Átbeszéljük a létszámot, az időbeosztást és a feladatokat."
+      - cim: "Ajánlat és eligazítás"
+        szoveg: "Írásos ajánlatot küldünk. Elfogadás után minden hostess írásos eligazítást kap: hely, idő, feladat, öltözet, helyszíni kapcsolattartó."
+      - cim: "A rendezvény napja"
+        szoveg: "A felkészített csapat a helyszínen van. Ha valaki kiesik, tartalék hostess pótolja. A megbízásról számlát állítunk ki."
+
+  intezmenyeknek:
+    cimke: "Intézményeknek és szervezőknek"
+    cim: "Amit egy intézményi megrendelőnek tudnia kell"
+    pontok:
+      - "Bejelentett munkavállalók, egyszerűsített foglalkoztatással"
+      - "Számla a megbízásról"
+      - "Egyszerre legfeljebb {max_egyszerre} hostess"
+      - "Önkormányzati, egyetemi és közintézményi rendezvényeken is dolgozunk"
+    megjegyzes: "[[HIÁNYZIK: tudnak-e beszerzéshez írásos árajánlatot, szerződést, teljesítésigazolást adni?]]"
+
+  referencia:
+    cimke: "Referencia"
+    cim: "Egy rendezvény közelről"
+
+  gyik:
+    cimke: "GYIK"
+    cim: "Kérdések a rendezvény-hostessről"
+
+  ajanlat:
+    cim: "Kérjen ajánlatot a rendezvényére"

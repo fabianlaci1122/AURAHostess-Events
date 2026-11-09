@@ -1,0 +1,55 @@
+# ─────────────────────────────────────────────────────────────
+#  JELENTKEZÉS HOSTESSNEK – ez az oldal TEGEZŐ (fiatal jelentkezőknek szól)
+# ─────────────────────────────────────────────────────────────
+
+seo:
+  title: "Hostess munka Pécsen – jelentkezés | AURA. Hostess & Events"
+  description: "Hostess munka Pécsen: bejelentett munka, írásos eligazítás, rendszeres munka a rendezvényszezonban. Jelentkezz az AURA. csapatába!"
+
+hero:
+  cimke: "Csatlakozz hozzánk"
+  cim: "Jelentkezz hostessnek"
+  alcim: "Konferenciák, gálák, előadóestek Pécsen. Bejelentett munka, minden alkalommal írásos eligazítással."
+  foto:
+    leiras: "FOTÓ: a csapat egy rendezvény előtt, saját munka"
+
+szekciok:
+  elvarasok:
+    cimke: "Elvárások"
+    cim: "Mit várunk tőled?"
+    bevezeto: "Őszintén, hogy tudd, mire számíts:"
+    elemek:
+      - cim: "Pontosság"
+        szoveg: "Időben ott vagy. A rendezvény nem vár, és a csapat sem."
+        ikon: ora
+      - cim: "Megjelenés"
+        szoveg: "Rendezetten, az eligazításban kért öltözetben érkezel."
+        ikon: fogas
+      - cim: "Felkészülés"
+        szoveg: "Elolvasod az írásos eligazítást, és tudod, mi a feladatod, mielőtt odaérsz."
+        ikon: dokumentum
+
+  kapsz:
+    cimke: "Amit kapsz"
+    cim: "Mit kapsz tőlünk?"
+    elemek:
+      - cim: "Bejelentett munka"
+        szoveg: "Egyszerűsített foglalkoztatással, bejelentve dolgozol."
+        ikon: szamla
+      - cim: "Írásos eligazítás"
+        szoveg: "Minden munka előtt leírva: hely, idő, feladat, öltözet, kapcsolattartó."
+        ikon: dokumentum
+      - cim: "Rendszeres munka a szezonban"
+        szoveg: "A legtöbb rendezvény szeptember és november között van. Nyáron kevesebb a munka."
+        ikon: naptar
+    megjegyzes: "[[HIÁNYZIK: hostess-órabér vagy bérsáv – a tulajdonos dönti el, kiírja-e]]"
+
+  folyamat:
+    cimke: "Utána"
+    cim: "Mi történik a jelentkezés után?"
+    szoveg: "[[HIÁNYZIK: a jelentkezés utáni lépések – pl. mikor jelzünk vissza, van-e személyes találkozó vagy próbamunka]]"
+
+  urlap:
+    cimke: "Jelentkezés"
+    cim: "Jelentkezz most"
+    bevezeto: "Két perc az egész. A „nem kötelező” jelölésű mezőket kihagyhatod."

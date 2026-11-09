@@ -1,0 +1,49 @@
+# ─────────────────────────────────────────────────────────────
+#  REFERENCIÁK
+#  Csak valós rendezvény kerülhet ide, a megbízó engedélyével.
+#  Az idézethez és a logóhoz a megbízó írásos hozzájárulása kell.
+#  Fotó: tedd a képet a content/fotok/ mappába, és írd be a fájlnevét
+#  ("fajl: konferencia-2025.jpg") és egy rövid leírást ("alt: …").
+# ─────────────────────────────────────────────────────────────
+
+esettanulmanyok:
+  - rendezveny: "[[HIÁNYZIK: rendezvény neve]]"
+    tipus: "[[HIÁNYZIK: típus, pl. konferencia]]"
+    helyszin: "[[HIÁNYZIK: helyszín]]"
+    letszam: "[[HIÁNYZIK: hány hostess]]"
+    feladat: "[[HIÁNYZIK: feladatok]]"
+    idezet: "[[HIÁNYZIK: megbízói idézet – írásos engedéllyel]]"
+    idezo: "[[HIÁNYZIK: név, beosztás, szervezet]]"
+    foto:
+      leiras: "FOTÓ: regisztrációs pult, saját konferencia"
+    oldalak: [fooldal, referenciak, rendezveny]
+
+  - rendezveny: "[[HIÁNYZIK: rendezvény neve]]"
+    tipus: "[[HIÁNYZIK: típus, pl. előadóest]]"
+    helyszin: "[[HIÁNYZIK: helyszín]]"
+    letszam: "[[HIÁNYZIK: hány hostess]]"
+    feladat: "[[HIÁNYZIK: feladatok]]"
+    idezet: "[[HIÁNYZIK: megbízói idézet – írásos engedéllyel]]"
+    idezo: "[[HIÁNYZIK: név, beosztás, szervezet]]"
+    foto:
+      leiras: "FOTÓ: jegyellenőrzés egy előadóest bejáratánál"
+    oldalak: [fooldal, referenciak, eloadoest]
+
+  - rendezveny: "[[HIÁNYZIK: rendezvény neve]]"
+    tipus: "[[HIÁNYZIK: típus, pl. gála]]"
+    helyszin: "[[HIÁNYZIK: helyszín]]"
+    letszam: "[[HIÁNYZIK: hány hostess]]"
+    feladat: "[[HIÁNYZIK: feladatok]]"
+    idezet: "[[HIÁNYZIK: megbízói idézet – írásos engedéllyel]]"
+    idezo: "[[HIÁNYZIK: név, beosztás, szervezet]]"
+    foto:
+      leiras: "FOTÓ: vendégfogadás egy gálán"
+    oldalak: [fooldal, referenciak]
+
+# Megbízói logók – CSAK engedéllyel. Példa:
+#   - nev: "Szervezet neve"
+#     fajl: "logo-szervezet.svg"   (a content/fotok/ mappában)
+logok: []
+
+# Amíg nincs engedélyezett logó, ennyi helyőrző doboz látszik
+logo_helyorzok: 5

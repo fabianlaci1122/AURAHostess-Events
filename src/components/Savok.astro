@@ -1,0 +1,56 @@
+---
+/**
+ * Záró sávok:
+ * - "cta": ajánlatkérésre hív (űrlap nélküli oldalak alján)
+ * - "toborzo": hostess-jelentkezésre hív
+ */
+import Ikon from './Ikon.astro';
+import { inline, telHref, type Tokenek } from '../lib/szoveg';
+import type { Felulet } from '../lib/tartalom';
+
+interface Props {
+  tipus: 'cta' | 'toborzo';
+  cim: string;
+  szoveg?: string;
+  href: string;
+  telefon?: string;
+  tok: Tokenek;
+  f: Felulet;
+}
+const { tipus, cim, szoveg, href, telefon, tok, f } = Astro.props;
+---
+
+{
+  tipus === 'cta' ? (
+    <section class="sotet szekcio relative overflow-hidden" aria-labelledby="cta-cim">
+      <div class="tarolo relative flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
+        <div class="max-w-2xl">
+          <h2 id="cta-cim" class="h2" set:html={inline(cim, tok)} />
+          {szoveg && <p class="bevezeto mt-5" set:html={inline(szoveg, tok)} />}
+        </div>
+        <div class="flex flex-col gap-3 sm:flex-row">
+          <a href={href} class="gomb gomb-bronz">{f.gombok.ajanlat}</a>
+          {telefon && (
+            <a href={telHref(telefon)} class="gomb gomb-korvonal-vilagos" data-hely="cta-sav">
+              <Ikon nev="telefon" meret={18} />
+              {f.gombok.hivas}
+            </a>
+          )}
+        </div>
+      </div>
+    </section>
+  ) : (
+    <section class="border-t border-vonal bg-papir" aria-labelledby="toborzo-cim">
+      <div class="tarolo flex flex-col gap-6 py-10 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h2 id="toborzo-cim" class="h3-display" set:html={inline(cim, tok)} />
+          {szoveg && <p class="halvany mt-1" set:html={inline(szoveg, tok)} />}
+        </div>
+        <a href={href} class="gomb gomb-korvonal shrink-0">
+          {f.gombok.jelentkezes}
+          <Ikon nev="nyil" meret={18} />
+        </a>
+      </div>
+    </section>
+  )
+}

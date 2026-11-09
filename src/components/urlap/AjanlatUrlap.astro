@@ -1,0 +1,95 @@
+---
+/** Kétlépcsős ajánlatkérő űrlap. JS nélkül egyetlen hosszú űrlapként működik. */
+import Ikon from '../Ikon.astro';
+import Mezo from './Mezo.astro';
+import Valasztok from './Valasztok.astro';
+import UrlapVeg from './UrlapVeg.astro';
+import { API, type Nyelv, type OldalKulcs } from '../../i18n/utak';
+import { tokenek } from '../../lib/szoveg';
+import type { alap } from '../../lib/tartalom';
+
+interface Props {
+  lang: Nyelv;
+  kulcs: OldalKulcs;
+  a: Awaited<ReturnType<typeof alap>>;
+  tipusAlap?: string;
+}
+const { lang, kulcs, a, tipusAlap } = Astro.props;
+const { felulet: f, tok } = a;
+const u = f.urlap;
+const m = u.ajanlat.mezok;
+const id = 'ajanlat-urlap';
+const nk = u.nem_kotelezo;
+const uzenetek = Object.fromEntries(Object.entries(u.uzenetek.magazo).map(([k, v]) => [k, tokenek(v, tok)]));
+const jelzo = (n: number, nev: string) => `${tokenek(u.lepes_jelzo, { n: String(n) })} · ${nev}`;
+---
+
+<form id={id} action={API.ajanlatkeres} method="post" data-urlap="ajanlatkeres" class="kartya relative p-5 sm:p-8" novalidate={false}>
+  <script type="application/json" data-uzenetek set:html={JSON.stringify(uzenetek)} />
+
+  <div class="lepes-jelzo mb-7" data-lepes-jelzo hidden>
+    <span data-lepes-szoveg data-egy={jelzo(1, u.lepes1)} data-ketto={jelzo(2, u.lepes2)} aria-live="polite">{jelzo(1, u.lepes1)}</span>
+    <span class="lepes-sav" aria-hidden="true"></span>
+  </div>
+
+  <p class="urlap-doboz mb-6" data-osszegzo role="alert" tabindex="-1"></p>
+
+  <fieldset data-lepes="1" class="m-0 min-w-0 border-0 p-0">
+    <legend class="h3 mb-6 outline-none" data-lepes-cim="1" tabindex="-1">{u.lepes1}</legend>
+    <div class="grid gap-x-5 gap-y-6 sm:grid-cols-2">
+      <Mezo urlapId={id} nev="nev" cimke={m.nev.cimke} kotelezo autocomplete="name" max={100} nemKotelezo={nk} tok={tok} />
+      <Mezo urlapId={id} nev="szervezet" cimke={m.szervezet.cimke} sugo={m.szervezet.sugo} kotelezo autocomplete="organization" max={150} nemKotelezo={nk} tok={tok} />
+      <Mezo urlapId={id} nev="email" tipus="email" cimke={m.email.cimke} kotelezo autocomplete="email" max={200} nemKotelezo={nk} tok={tok} />
+      <Mezo urlapId={id} nev="telefon" tipus="tel" cimke={m.telefon.cimke} kotelezo autocomplete="tel" max={30} nemKotelezo={nk} tok={tok} />
+      <Mezo urlapId={id} nev="datum" tipus="date" cimke={m.datum.cimke} kotelezo nemKotelezo={nk} tok={tok} />
+      <Mezo urlapId={id} nev="helyszin" cimke={m.helyszin.cimke} sugo={m.helyszin.sugo} kotelezo max={150} nemKotelezo={nk} tok={tok} />
+      <Valasztok
+        urlapId={id}
+        nev="rendezveny_tipusa"
+        tipus="radio"
+        cimke={m.rendezveny_tipusa.cimke}
+        opciok={u.ajanlat.tipusok}
+        kotelezo
+        alapErtek={tipusAlap}
+        nemKotelezo={nk}
+        tok={tok}
+        class="sm:col-span-2"
+      />
+    </div>
+  </fieldset>
+
+  <div class="mt-8">
+    <button type="button" class="gomb gomb-tinta w-full sm:w-auto" data-tovabb hidden>
+      {u.tovabb}<Ikon nev="nyil" meret={18} />
+    </button>
+  </div>
+
+  <fieldset data-lepes="2" class="m-0 mt-10 min-w-0 border-0 p-0">
+    <legend class="h3 outline-none" data-lepes-cim="2" tabindex="-1">
+      {u.lepes2} <span class="text-base font-normal text-halvany">({nk})</span>
+    </legend>
+    <p class="mezo-sugo mt-2 mb-6 max-w-xl">{tokenek(u.lepes2_sugo, tok)}</p>
+    <div class="grid gap-x-5 gap-y-6 sm:grid-cols-2">
+      <Mezo urlapId={id} nev="letszam" tipus="number" cimke={m.letszam.cimke} sugo={m.letszam.sugo} min={1} maxSzam={100} nemKotelezo={nk} opcionalisJel={false} tok={tok} />
+      <Mezo urlapId={id} nev="idotartam" cimke={m.idotartam.cimke} sugo={m.idotartam.sugo} max={100} nemKotelezo={nk} opcionalisJel={false} tok={tok} />
+      <Valasztok urlapId={id} nev="feladatok" tipus="checkbox" cimke={m.feladatok.cimke} opciok={u.ajanlat.feladatok} nemKotelezo={nk} opcionalisJel={false} tok={tok} class="sm:col-span-2" />
+      <Mezo urlapId={id} nev="oltozet" cimke={m.oltozet.cimke} sugo={m.oltozet.sugo} max={200} nemKotelezo={nk} opcionalisJel={false} tok={tok} />
+      <Mezo urlapId={id} nev="nyelvi_igeny" cimke={m.nyelvi_igeny.cimke} sugo={m.nyelvi_igeny.sugo} max={200} nemKotelezo={nk} opcionalisJel={false} tok={tok} />
+      <Mezo urlapId={id} nev="megjegyzes" tipus="textarea" cimke={m.megjegyzes.cimke} max={2000} nemKotelezo={nk} opcionalisJel={false} tok={tok} class="sm:col-span-2" />
+    </div>
+  </fieldset>
+
+  <div data-lepes="2" class="mt-8 grid gap-6">
+    <UrlapVeg urlapId={id} lang={lang} kulcs={kulcs} f={f} />
+    <div class="flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <button type="button" class="nyil-link !text-halvany flex-row-reverse justify-center sm:justify-start" data-vissza hidden>
+        <span>{u.vissza}</span><Ikon nev="nyil" meret={18} class="rotate-180" />
+      </button>
+      <button type="submit" class="gomb gomb-bronz w-full sm:w-auto" data-folyamatban={u.kuldes_folyamatban}>{u.ajanlat.kuldes}</button>
+    </div>
+  </div>
+</form>
+
+<script>
+  import '../../scripts/urlap';
+</script>

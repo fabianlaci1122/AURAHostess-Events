@@ -1,0 +1,38 @@
+---
+/** Megbízói logók – csak engedéllyel. Amíg nincs, jelölt helyőrzők látszanak. */
+import { Image } from 'astro:assets';
+import Ikon from './Ikon.astro';
+
+interface Props {
+  logok: { nev: string; fajl?: string }[];
+  helyorzok: number;
+  cim?: string;
+}
+const { logok, helyorzok, cim } = Astro.props;
+const kepek = import.meta.glob<{ default: ImageMetadata }>('/content/fotok/*.{svg,png,jpg,jpeg,webp}', { eager: true });
+---
+
+<div>
+  {cim && <p class="cimke">{cim}</p>}
+  <ul class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5" role="list">
+    {
+      logok.length > 0
+        ? logok.map((l) => {
+            const kep = l.fajl ? kepek[`/content/fotok/${l.fajl}`]?.default : undefined;
+            return (
+              <li class="grid h-24 place-items-center border border-vonal bg-papir px-5">
+                {kep ? <Image src={kep} alt={l.nev} class="max-h-12 w-auto object-contain" /> : <span class="text-center text-sm font-medium">{l.nev}</span>}
+              </li>
+            );
+          })
+        : Array.from({ length: helyorzok }, () => (
+            <li>
+              <div class="foto-hely h-24 !flex-row !gap-2 !p-3 !text-xs" role="img" aria-label="Helyőrző – megbízói logó, engedéllyel">
+                <Ikon nev="logo" meret={18} />
+                <span>LOGÓ – engedéllyel</span>
+              </div>
+            </li>
+          ))
+    }
+  </ul>
+</div>

@@ -1,0 +1,40 @@
+---
+/** Minden űrlap vége: adatkezelési hozzájárulás, csalimező (spam), rejtett mezők. */
+import { ut, type Nyelv, type OldalKulcs } from '../../i18n/utak';
+import { UTM_KULCSOK } from '../../lib/urlap-szabalyok';
+import type { Felulet } from '../../lib/tartalom';
+
+interface Props {
+  urlapId: string;
+  lang: Nyelv;
+  kulcs: OldalKulcs;
+  f: Felulet;
+  /** Egyedi szöveg a hozzájárulás mellé (pl. életkor-nyilatkozat előtt) – nem kötelező. */
+}
+const { urlapId, lang, kulcs, f } = Astro.props;
+const id = `${urlapId}-adatkezeles`;
+---
+
+<div class="mezo" data-mezo="adatkezeles">
+  <div class="jelolo">
+    <input id={id} type="checkbox" name="adatkezeles" value="igen" required aria-describedby={`${id}-hiba`} />
+    <label for={id}>
+      {f.urlap.adatkezeles_elotte}
+      <a href={ut('adatkezeles', lang)} class="szoveg-link" target="_blank" rel="noopener">
+        {f.urlap.adatkezeles_link}<span class="sr-only"> {f.urlap.uj_lapon}</span>
+      </a>{f.urlap.adatkezeles_utana}
+    </label>
+  </div>
+  <p id={`${id}-hiba`} class="mezo-hiba" data-hiba></p>
+</div>
+
+<div class="csali" aria-hidden="true">
+  <label for={`${urlapId}-weboldal`}>Weboldal (ezt a mezőt hagyja üresen)</label>
+  <input id={`${urlapId}-weboldal`} type="text" name="weboldal" tabindex="-1" autocomplete="off" />
+</div>
+
+<input type="hidden" name="_t" value="" />
+<input type="hidden" name="nyelv" value={lang} />
+<input type="hidden" name="oldal" value={ut(kulcs, lang)} />
+<input type="hidden" name="kuldes_ideje" value="" />
+{UTM_KULCSOK.map((k) => <input type="hidden" name={k} value="" />)}

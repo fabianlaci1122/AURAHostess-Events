@@ -1,0 +1,87 @@
+---
+import Ikon from './Ikon.astro';
+import { ut, type Nyelv, type OldalKulcs } from '../i18n/utak';
+import { inline, telHref } from '../lib/szoveg';
+import type { alap } from '../lib/tartalom';
+
+interface Props {
+  lang: Nyelv;
+  kulcs: OldalKulcs;
+  ctaHref: string;
+  a: Awaited<ReturnType<typeof alap>>;
+}
+const { lang, kulcs, ctaHref, a } = Astro.props;
+const { felulet: f, ceg } = a;
+const tel = telHref(ceg.telefon, ut('kapcsolat', lang));
+---
+
+<header class="fejlec sotet">
+  <div class="tarolo flex h-[4.5rem] items-center justify-between gap-6">
+    <a href={ut('fooldal', lang)} class="logo" aria-current={kulcs === 'fooldal' ? 'page' : undefined}>
+      <span class="logo-szo">AURA.</span>
+      <span class="logo-al">Hostess &amp; Events</span>
+    </a>
+
+    <nav aria-label={f.menu.cimke} class="fo-nav hidden lg:block">
+      <ul class="flex items-center gap-7 xl:gap-8">
+        {
+          f.menu.pontok.map((p) => (
+            <li>
+              <a href={ut(p.oldal, lang)} aria-current={p.oldal === kulcs ? 'page' : undefined}>
+                {p.szoveg}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <a href={tel} class="hidden items-center gap-2 text-[0.9375rem] text-elefant-halvany no-underline transition-colors hover:text-elefant xl:inline-flex" data-hely="fejlec">
+        <Ikon nev="telefon" meret={18} class="text-bronz" />
+        <span set:html={inline(ceg.telefon)} />
+      </a>
+      <a href={ctaHref} class="gomb gomb-bronz hidden !min-h-[2.75rem] !py-2.5 sm:inline-flex">{f.gombok.ajanlat}</a>
+      <button
+        type="button"
+        class="inline-flex min-h-[2.75rem] items-center gap-2 px-1 text-elefant lg:hidden"
+        aria-expanded="false"
+        aria-controls="mobil-menu"
+        data-menu-gomb
+        data-nyitas={f.menu.nyitas_sr}
+        data-zaras={f.menu.zaras_sr}
+      >
+        <span class="text-sm font-medium tracking-[0.14em] uppercase">{f.menu.nyitas}</span>
+        <Ikon nev="menu" class="menu-ikon-nyit" />
+        <Ikon nev="bezar" class="menu-ikon-zar hidden" />
+        <span class="sr-only" data-menu-sr>{f.menu.nyitas_sr}</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobil-menu" class="mobil-menu h-[calc(100dvh-4.5rem)] overflow-y-auto border-t border-tinta-vonal lg:hidden" hidden>
+    <nav aria-label={f.menu.cimke} class="tarolo pb-8 pt-2">
+      <ul>
+        {
+          f.menu.pontok.map((p) => (
+            <li>
+              <a class="menu-pont" href={ut(p.oldal, lang)} aria-current={p.oldal === kulcs ? 'page' : undefined}>
+                {p.szoveg}
+                <Ikon nev="nyil" meret={20} class="text-bronz" />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2">
+        <a href={ctaHref} class="gomb gomb-bronz" data-menu-zar>{f.gombok.ajanlat}</a>
+        <a href={tel} class="gomb gomb-korvonal-vilagos" data-hely="mobil-menu">
+          <Ikon nev="telefon" meret={18} />{f.gombok.hivas}
+        </a>
+      </div>
+      <p class="mt-6">
+        <a href={ut('jelentkezes', lang)} class="nyil-link"><span>{f.menu.jelentkezes}</span><Ikon nev="nyil" meret={18} /></a>
+      </p>
+    </nav>
+  </div>
+</header>

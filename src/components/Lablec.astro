@@ -1,0 +1,89 @@
+---
+import Ikon from './Ikon.astro';
+import { ut, type Nyelv } from '../i18n/utak';
+import { hasznalhato, inline, mailHref, telHref } from '../lib/szoveg';
+import type { alap } from '../lib/tartalom';
+
+interface Props {
+  lang: Nyelv;
+  a: Awaited<ReturnType<typeof alap>>;
+}
+const { lang, a } = Astro.props;
+const { felulet: f, ceg, tok } = a;
+const menu = (k: string) => f.menu.pontok.find((p) => p.oldal === k)?.szoveg ?? k;
+---
+
+<footer class="sotet pt-16 pb-10 sm:pt-20">
+  <div class="tarolo">
+    <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1.3fr]">
+      <div>
+        <a href={ut('fooldal', lang)} class="logo">
+          <span class="logo-szo !text-[2.25rem]">AURA.</span>
+          <span class="logo-al">Hostess &amp; Events</span>
+        </a>
+        <p class="halvany mt-6 max-w-xs text-[0.9375rem]" set:html={inline(f.lablec.leiras, tok)} />
+        <p class="mt-6 font-display text-xl font-semibold italic text-bronz" lang="en">{ceg.motto}</p>
+      </div>
+
+      <div>
+        <h2 class="cimke">{f.lablec.szolgaltatasok}</h2>
+        <ul class="mt-5 space-y-1 text-[0.9375rem]">
+          <li><a class="inline-flex min-h-10 items-center text-elefant-halvany hover:text-elefant" href={ut('rendezveny', lang)}>{menu('rendezveny')}</a></li>
+          <li><a class="inline-flex min-h-10 items-center text-elefant-halvany hover:text-elefant" href={ut('eloadoest', lang)}>{menu('eloadoest')}</a></li>
+          <li><a class="inline-flex min-h-10 items-center text-elefant-halvany hover:text-elefant" href={ut('arak', lang)}>{menu('arak')}</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="cimke">{f.lablec.ceg}</h2>
+        <ul class="mt-5 space-y-1 text-[0.9375rem]">
+          <li><a class="inline-flex min-h-10 items-center text-elefant-halvany hover:text-elefant" href={ut('rolunk', lang)}>{menu('rolunk')}</a></li>
+          <li><a class="inline-flex min-h-10 items-center text-elefant-halvany hover:text-elefant" href={ut('referenciak', lang)}>{menu('referenciak')}</a></li>
+          <li><a class="inline-flex min-h-10 items-center text-elefant-halvany hover:text-elefant" href={ut('jelentkezes', lang)}>{f.menu.jelentkezes}</a></li>
+          <li><a class="inline-flex min-h-10 items-center text-elefant-halvany hover:text-elefant" href={ut('kapcsolat', lang)}>{menu('kapcsolat')}</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="cimke">{f.lablec.elerhetoseg}</h2>
+        <ul class="mt-5 space-y-2 text-[0.9375rem]">
+          <li>
+            <a href={telHref(ceg.telefon, ut('kapcsolat', lang))} class="inline-flex min-h-10 items-center gap-3 text-elefant hover:text-bronz-vilagos" data-hely="lablec">
+              <Ikon nev="telefon" meret={18} class="text-bronz" /><span set:html={inline(ceg.telefon)} />
+            </a>
+          </li>
+          <li>
+            <a href={mailHref(ceg.email, ut('kapcsolat', lang))} class="inline-flex min-h-10 items-center gap-3 text-elefant hover:text-bronz-vilagos" data-hely="lablec">
+              <Ikon nev="email" meret={18} class="text-bronz" /><span set:html={inline(ceg.email)} />
+            </a>
+          </li>
+          <li>
+            <a href={ceg.instagram} class="inline-flex min-h-10 items-center gap-3 text-elefant hover:text-bronz-vilagos" data-hely="lablec" rel="noopener">
+              <Ikon nev="instagram" meret={18} class="text-bronz" />{ceg.instagram_nev}
+            </a>
+          </li>
+          <li class="flex items-start gap-3 pt-1 text-elefant-halvany">
+            <Ikon nev="terkep" meret={18} class="mt-0.5 shrink-0 text-bronz" /><span set:html={inline(f.lablec.terulet, tok)} />
+          </li>
+          {
+            hasznalhato(ceg.google_cegprofil) && (
+              <li>
+                <a href={ceg.google_cegprofil} class="szoveg-link inline-flex min-h-10 items-center" rel="noopener">{f.lablec.cegprofil}</a>
+              </li>
+            )
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-16 flex flex-col gap-4 border-t border-tinta-vonal pt-8 text-sm text-elefant-halvany sm:flex-row sm:items-center sm:justify-between">
+      <p set:html={inline(f.lablec.jog, tok)} />
+      <nav aria-label={f.lablec.jogi}>
+        <ul class="flex flex-wrap gap-x-6 gap-y-1">
+          <li><a class="inline-flex min-h-10 items-center hover:text-elefant" href={ut('impresszum', lang)}>Impresszum</a></li>
+          <li><a class="inline-flex min-h-10 items-center hover:text-elefant" href={ut('adatkezeles', lang)}>Adatkezelési tájékoztató</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</footer>

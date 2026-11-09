@@ -1,0 +1,70 @@
+# ─────────────────────────────────────────────────────────────
+#  ELŐADÓESTEK ÉS HELYSZÍNEK
+# ─────────────────────────────────────────────────────────────
+
+seo:
+  title: "Beléptető személyzet és jegyszedők előadóestekre Pécsen | AURA."
+  description: "Állandó beléptető csapat turnéknak és pécsi helyszíneknek: jegyellenőrzés, helyre kísérés, ruhatár. Előadóest-csomag fix áron, keretmegállapodással."
+
+hero:
+  cim: "Beléptető csapat előadóestekre Pécsen"
+  alcim: "A teljes beléptető csapat egy hívásra: mindig ugyanazok, akik már ismerik a menetet."
+  foto:
+    leiras: "FOTÓ: beléptetés egy előadóest előtt, saját munka"
+
+szekciok:
+  kinek:
+    cimke: "Kinek szól?"
+    cim: "Turnéknak és helyszíneknek"
+    elemek:
+      - cim: "Turnészervezőknek"
+        szoveg: "Pécsi turnéállomásra keres beléptető csapatot? Minden alkalommal ugyanazok jönnek – nem kell újra betanítani senkit."
+        ikon: terkep
+      - cim: "Pécsi helyszíneknek"
+        szoveg: "Rendszeresen tartanak előadóesteket? Állandó csapat, kiszámítható ár, egyetlen kapcsolattartó."
+        ikon: jegy
+
+  csomag:
+    cimke: "Előadóest-csomag"
+    cim: "A beléptetés teljes csapata egy csomagban"
+    szoveg: "{csomag_letszam} hostess {csomag_ora} órára, fix áron. Ennyi kell egy előadóest beléptetéséhez: jegyellenőrzés, helyre kísérés, ruhatár."
+
+  keret:
+    cimke: "Keretmegállapodás"
+    cim: "Miért éri meg keretmegállapodással dolgozni?"
+    elemek:
+      - cim: "Állandó csapat"
+        szoveg: "Ugyanazok a hostessek jönnek minden estére. Ismerik a helyszínt, a bejáratokat és a menetet."
+        ikon: csapat
+      - cim: "Kiszámítható ár"
+        szoveg: "Előre rögzített csomagár, nincs meglepetés a számlán."
+        ikon: szamla
+      - cim: "Egy kapcsolattartó"
+        szoveg: "Egy embert kell felhívnia, ő intéz mindent."
+        ikon: telefon
+    megjegyzes: "[[HIÁNYZIK: a keretmegállapodás feltételei – pl. minimális időtartam vagy estek száma]]"
+
+  indulas:
+    cimke: "Indulás"
+    cim: "Így indul az együttműködés"
+    elemek:
+      - cim: "Küldje el a dátumokat"
+        szoveg: "Írja meg a várható előadásokat és a helyszínt – akár egy egész évadot."
+      - cim: "Egyeztetünk"
+        szoveg: "{Valaszido} jelentkezünk, és átbeszéljük a beléptetés menetét."
+      - cim: "Keretmegállapodás"
+        szoveg: "Rögzítjük a csomagárat, a feladatokat és a kapcsolattartást."
+      - cim: "Állandó csapat minden estén"
+        szoveg: "Ugyanaz a csapat jön, írásos eligazítással, tartalékkal."
+
+  referencia:
+    cimke: "Referencia"
+    cim: "Egy előadóest közelről"
+
+  gyik:
+    cimke: "GYIK"
+    cim: "Kérdések az előadóestekről"
+
+  ajanlat:
+    cim: "Kérjen ajánlatot az előadóestjeire"
+    bevezeto: "Írja meg az első dátumot és a helyszínt – a többit telefonon egyeztetjük. Ha több estére keres csapatot, a megjegyzésben jelezze."

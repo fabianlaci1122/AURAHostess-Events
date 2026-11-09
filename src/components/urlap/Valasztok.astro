@@ -1,0 +1,45 @@
+---
+import { inline, type Tokenek } from '../../lib/szoveg';
+
+interface Props {
+  urlapId: string;
+  nev: string;
+  cimke: string;
+  opciok: { ertek: string; szoveg: string }[];
+  tipus: 'radio' | 'checkbox';
+  kotelezo?: boolean;
+  nemKotelezo: string;
+  alapErtek?: string;
+  tok: Tokenek;
+  class?: string;
+  opcionalisJel?: boolean;
+}
+const { urlapId, nev, cimke, opciok, tipus, kotelezo = false, nemKotelezo, alapErtek, tok, class: osztaly, opcionalisJel = true } =
+  Astro.props;
+const id = `${urlapId}-${nev}`;
+---
+
+<fieldset
+  class:list={['valasztok', osztaly]}
+  data-mezo={nev}
+  role={tipus === 'radio' ? 'radiogroup' : undefined}
+  aria-labelledby={`${id}-cim`}
+  aria-describedby={`${id}-hiba`}
+  aria-required={tipus === 'radio' && kotelezo ? 'true' : undefined}
+>
+  <legend id={`${id}-cim`} class="mezo-cimke">
+    <span set:html={inline(cimke, tok)} />
+    {!kotelezo && opcionalisJel && <span class="opcionalis"> ({nemKotelezo})</span>}
+  </legend>
+  <div class="chipek">
+    {
+      opciok.map((o) => (
+        <label class="chip">
+          <input type={tipus} name={nev} value={o.ertek} checked={o.ertek === alapErtek} required={tipus === 'radio' && kotelezo} />
+          <span>{o.szoveg}</span>
+        </label>
+      ))
+    }
+  </div>
+  <p id={`${id}-hiba`} class="mezo-hiba mt-2" data-hiba></p>
+</fieldset>

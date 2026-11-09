@@ -1,0 +1,179 @@
+# ─────────────────────────────────────────────────────────────
+#  FELÜLET-SZÖVEGEK: menü, gombok, űrlapok, hibaüzenetek, lábléc
+#  A {kapcsos} részeket ne töröld: oda a rendszer illeszt be egy
+#  értéket (pl. {telefon}, {max_egyszerre}).
+#  A [[HIÁNYZIK: …]] jelölés sárgán látszik az oldalon.
+# ─────────────────────────────────────────────────────────────
+
+ugras_tartalomra: "Ugrás a tartalomra"
+
+menu:
+  cimke: "Fő navigáció"
+  nyitas: "Menü"
+  nyitas_sr: "Menü megnyitása"
+  zaras_sr: "Menü bezárása"
+  pontok:
+    - oldal: rendezveny
+      szoveg: "Rendezvény-hostess"
+    - oldal: eloadoest
+      szoveg: "Előadóestek"
+    - oldal: arak
+      szoveg: "Árak"
+    - oldal: referenciak
+      szoveg: "Referenciák"
+    - oldal: rolunk
+      szoveg: "Rólunk"
+    - oldal: kapcsolat
+      szoveg: "Kapcsolat"
+  jelentkezes: "Hostessnek jelentkeznék"
+
+gombok:
+  ajanlat: "Ajánlatot kérek"
+  hivas: "Hívjon most"
+  hivas_rovid: "Hívás"
+  jelentkezes: "Jelentkezés hostessnek"
+  csomag: "Ezt a csomagot kérem"
+
+morzsa:
+  cimke: "Morzsamenü"
+  fooldal: "Főoldal"
+
+mobil_sav: "Gyors elérés"
+foto_helyorzo: "Helyőrző"
+
+lablec:
+  leiras: "Felkészített, bejelentett hostessek pécsi rendezvényekre – számlával, írásos eligazítással."
+  szolgaltatasok: "Szolgáltatások"
+  ceg: "Az AURA."
+  elerhetoseg: "Elérhetőség"
+  terulet: "Szolgáltatási terület: {terulet}"
+  cegprofil: "Google Cégprofil"
+  jogi: "Jogi információk"
+  jog: "© {ev} AURA. Hostess & Events"
+
+# Az ajánlatkérő szekció (főoldal, aloldalak) alapszövege
+ajanlat_szekcio:
+  cimke: "Ajánlatkérés"
+  cim: "Kérjen ajánlatot a rendezvényére"
+  bevezeto: "Két rövid lépés. Az elsőben az alapadatok kellenek, a második önkéntes – minél több részletet ad meg, annál pontosabb ajánlatot küldünk."
+  utana_cim: "Mi történik ezután?"
+  utana:
+    - "{Valaszido} jelentkezünk, és egyeztetjük a részleteket."
+    - "Írásos ajánlatot küldünk."
+    - "Elfogadás után a hostessek írásos eligazítást kapnak."
+  kozvetlen_cim: "Inkább beszélne velünk?"
+  telefon: "Telefon"
+  email: "E-mail"
+
+urlap:
+  nem_kotelezo: "nem kötelező"
+  adatkezeles_elotte: "Elolvastam és elfogadom az"
+  adatkezeles_link: "adatkezelési tájékoztatót"
+  adatkezeles_utana: "."
+  uj_lapon: "(új lapon nyílik)"
+  kuldes_folyamatban: "Küldés…"
+  lepes_jelzo: "{n}. lépés a 2-ből"
+  lepes1: "Alapadatok"
+  lepes2: "Részletek"
+  lepes2_sugo: "Ebben a lépésben minden mező önkéntes. Ha még nem tudja a részleteket, küldje el így – az ajánlat előtt úgyis egyeztetünk."
+  tovabb: "Tovább a részletekhez"
+  vissza: "Vissza az alapadatokhoz"
+
+  # Hibaüzenetek: "magazo" az ajánlatkérő és a kapcsolati űrlapé, "tegezo" a hostess-jelentkezésé
+  uzenetek:
+    magazo:
+      kotelezo: "Töltse ki ezt a mezőt."
+      valasszon: "Válasszon egyet a lehetőségek közül."
+      email: "Adjon meg egy érvényes e-mail-címet, például nev@szervezet.hu."
+      telefon: "Adjon meg egy telefonszámot, például +36 30 123 4567."
+      datum: "Adjon meg egy mai vagy későbbi dátumot."
+      szam: "Adjon meg egy egész számot 1 és 100 között."
+      hossz: "Ez a szöveg túl hosszú. Rövidítse le."
+      hozzajarulas: "Az elküldéshez fogadja el az adatkezelési tájékoztatót."
+      eletkor: "Erősítse meg az életkorát."
+      ervenytelen: "Ez az érték nem választható."
+      osszegzo: "Néhány mező hiányzik vagy hibás. Javítsa a megjelölt mezőket."
+      szerverhiba: "Az elküldés most nem sikerült. Próbálja újra pár perc múlva, vagy hívjon minket: {telefon}."
+    tegezo:
+      kotelezo: "Töltsd ki ezt a mezőt."
+      valasszon: "Válassz egyet a lehetőségek közül."
+      email: "Adj meg egy érvényes e-mail-címet, például nev@email.hu."
+      telefon: "Adj meg egy telefonszámot, például +36 30 123 4567."
+      datum: "Adj meg egy mai vagy későbbi dátumot."
+      szam: "Adj meg egy egész számot."
+      hossz: "Ez a szöveg túl hosszú. Rövidítsd le."
+      hozzajarulas: "Az elküldéshez fogadd el az adatkezelési tájékoztatót."
+      eletkor: "A jelentkezéshez erősítsd meg az életkorodat."
+      ervenytelen: "Ez az érték nem választható."
+      osszegzo: "Néhány mező hiányzik vagy hibás. Javítsd a megjelölt mezőket."
+      szerverhiba: "Az elküldés most nem sikerült. Próbáld újra pár perc múlva, vagy írj nekünk Instagramon."
+
+  ajanlat:
+    kuldes: "Ajánlatot kérek"
+    mezok:
+      nev: { cimke: "Név" }
+      szervezet: { cimke: "Szervezet", sugo: "Cég, intézmény vagy helyszín neve" }
+      email: { cimke: "E-mail-cím" }
+      telefon: { cimke: "Telefonszám" }
+      datum: { cimke: "A rendezvény dátuma" }
+      helyszin: { cimke: "Helyszín", sugo: "Épület vagy terem neve, település" }
+      rendezveny_tipusa: { cimke: "A rendezvény típusa" }
+      letszam: { cimke: "Hány hostessre van szüksége?", sugo: "Egyszerre legfeljebb {max_egyszerre} hostesst tudunk biztosítani." }
+      idotartam: { cimke: "Időtartam", sugo: "Például: 17:00–21:00, vagy 4 óra" }
+      feladatok: { cimke: "Feladatok" }
+      oltozet: { cimke: "Öltözet", sugo: "Például: fekete-fehér, alkalmi, vagy a szervezet pólója" }
+      nyelvi_igeny: { cimke: "Nyelvi igény", sugo: "Például: legalább egy hostess beszéljen angolul" }
+      megjegyzes: { cimke: "Megjegyzés" }
+    tipusok:
+      - { ertek: konferencia, szoveg: "Konferencia" }
+      - { ertek: gala, szoveg: "Gála" }
+      - { ertek: vip_fogadas, szoveg: "VIP-fogadás" }
+      - { ertek: eloadoest, szoveg: "Előadóest" }
+      - { ertek: egyeb, szoveg: "Egyéb" }
+    feladatok:
+      - { ertek: regisztracio, szoveg: "Regisztráció" }
+      - { ertek: vendegfogadas, szoveg: "Vendégfogadás" }
+      - { ertek: iranyitas, szoveg: "Irányítás" }
+      - { ertek: protokoll, szoveg: "Protokoll" }
+      - { ertek: jegyellenorzes, szoveg: "Jegyellenőrzés" }
+      - { ertek: helyre_kiseres, szoveg: "Helyre kísérés" }
+      - { ertek: ruhatar, szoveg: "Ruhatár" }
+      - { ertek: egyeb, szoveg: "Egyéb" }
+
+  jelentkezes:
+    kuldes: "Elküldöm a jelentkezésem"
+    mezok:
+      nev: { cimke: "Név" }
+      email: { cimke: "E-mail-cím" }
+      telefon: { cimke: "Telefonszám" }
+      varos: { cimke: "Település", sugo: "Ahol laksz vagy tanulsz" }
+      eletkor: { cimke: "Elmúltam {korhatar} éves." }
+      nyelvek: { cimke: "Milyen nyelveken beszélsz?", sugo: "Például: angol (társalgási), német (alap)" }
+      napok: { cimke: "Mely napokon érsz rá általában?" }
+      tapasztalat: { cimke: "Van rendezvényes tapasztalatod?", sugo: "Pár mondat elég. Ha még nincs, azt is írd meg." }
+      profil: { cimke: "Instagram-profil vagy fotó linkje", sugo: "Például: @felhasznalonev, vagy egy fotó linkje" }
+    napok:
+      - { ertek: hetfo, szoveg: "Hétfő" }
+      - { ertek: kedd, szoveg: "Kedd" }
+      - { ertek: szerda, szoveg: "Szerda" }
+      - { ertek: csutortok, szoveg: "Csütörtök" }
+      - { ertek: pentek, szoveg: "Péntek" }
+      - { ertek: szombat, szoveg: "Szombat" }
+      - { ertek: vasarnap, szoveg: "Vasárnap" }
+
+  kapcsolat:
+    kuldes: "Üzenet küldése"
+    mezok:
+      nev: { cimke: "Név" }
+      email: { cimke: "E-mail-cím" }
+      telefon: { cimke: "Telefonszám" }
+      uzenet: { cimke: "Üzenet" }
+
+kalkulator:
+  cim: "Számolja ki"
+  letszam: "Hostessek száma"
+  ora: "Órák száma"
+  oradij_resz: "Óradíj"
+  kiallasi_resz: "Kiállási díj"
+  osszesen: "Összesen"
+  megjegyzes: "Tájékoztató összeg. A pontos árat az ajánlatban küldjük."

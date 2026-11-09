@@ -1,0 +1,30 @@
+# ─────────────────────────────────────────────────────────────
+#  REFERENCIÁK OLDAL – maguk az esettanulmányok: content/hu/referenciak.yaml
+# ─────────────────────────────────────────────────────────────
+
+seo:
+  title: "Referenciák – hostess-csapat pécsi rendezvényeken | AURA."
+  description: "Konferenciák, gálák, intézményi rendezvények és előadóestek, ahol az AURA. hostess-csapata dolgozott Pécsen és környékén."
+
+hero:
+  cim: "Referenciák"
+  alcim: "Rendezvények, ahol már dolgoztunk: a rendezvény, a helyszín, a létszám, a feladat – és a megbízó szavai."
+
+szekciok:
+  esetek:
+    cimke: "Esettanulmányok"
+    cim: "Rendezvények közelről"
+
+  logok:
+    cimke: "Megbízóink"
+    cim: "Akikkel dolgoztunk"
+    megjegyzes: "A logókat a megbízók engedélyével tesszük ki."
+
+  instagram:
+    cim: "Friss képek a rendezvényekről"
+    szoveg: "A legújabb munkáinkat az Instagramon mutatjuk meg."
+    link_szoveg: "Az AURA. az Instagramon"
+
+  cta:
+    cim: "A következő referencia lehet az Ön rendezvénye."
+    szoveg: "Kérjen ajánlatot – {valaszido} jelentkezünk."

@@ -1,0 +1,10 @@
+---
+// Szerveren renderelődik: a ?tipus= alapján mutatja a megfelelő köszönőszöveget.
+export const prerender = false;
+import Koszonjuk from '../nezetek/Koszonjuk.astro';
+
+Astro.response.headers.set('Cache-Control', 'no-store');
+Astro.response.headers.set('X-Robots-Tag', 'noindex');
+---
+
+<Koszonjuk lang="hu" tipus={Astro.url.searchParams.get('tipus')} />

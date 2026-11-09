@@ -1,0 +1,64 @@
+# ─────────────────────────────────────────────────────────────
+#  ÁRAK ÉS MŰKÖDÉS
+#  Maguk az árak a content/hu/arazas.yaml fájlban vannak.
+# ─────────────────────────────────────────────────────────────
+
+seo:
+  title: "Hostess bérlés Pécs – árak és működés | AURA. Hostess & Events"
+  description: "Mennyibe kerül egy hostess Pécsen? Óradíj és kiállási díj közérthetően, számolási példával. Előadóest-csomag, pótlás, lemondás."
+
+hero:
+  cimke: "Árak és működés"
+  cim: "Mennyibe kerül egy hostess?"
+  alcim: "Az ár két részből áll: óradíjból és kiállási díjból. Lent megmutatjuk, hogyan számoljuk."
+
+szekciok:
+  ket_resz:
+    cimke: "Az ár két része"
+    cim: "Óradíj és kiállási díj"
+    elemek:
+      - cim: "Óradíj"
+        szoveg: "A hostessek munkaidejére, fejenként és óránként. {minimum_ora}"
+      - cim: "Kiállási díj"
+        szoveg: "Alkalmanként egyszer, fejenként. Ez fedezi a hostess napi bejelentésének költségét – ettől lesz minden hostess bejelentett munkavállaló."
+
+  pelda:
+    cimke: "Példa"
+    cim: "Számolási példa"
+    szoveg: "{letszam} hostess {ora} órára:"
+
+  fugg:
+    cimke: "Mitől függ az ár?"
+    cim: "Mitől függ az ár?"
+    pontok:
+      - "Hány hostessre van szüksége"
+      - "Hány órát dolgoznak"
+      - "{felarak}"
+
+  csomag:
+    cimke: "Előadóestekre"
+    cim: "Előadóest-csomag fix áron"
+    szoveg: "{csomag_letszam} hostess {csomag_ora} órára: jegyellenőrzés, helyre kísérés, ruhatár."
+    link_szoveg: "Az előadóest-csomag részletei"
+
+  mukodes:
+    cimke: "Működés"
+    cim: "Pótlás, lemondás, fizetés"
+    elemek:
+      - cim: "Ha valaki kiesik"
+        szoveg: "Tartalék hostesszel dolgozunk: ha valaki megbetegszik vagy kiesik, pótoljuk. {potlas}"
+        ikon: csere
+      - cim: "Lemondás"
+        szoveg: "{lemondas}"
+        ikon: naptar
+      - cim: "Fizetés és számla"
+        szoveg: "A megbízásról számlát állítunk ki. {fizetes}"
+        ikon: szamla
+
+  gyik:
+    cimke: "GYIK"
+    cim: "Kérdések az árakról"
+
+  ajanlat:
+    cim: "Kérjen pontos ajánlatot"
+    bevezeto: "A kalkulátor tájékoztató összeget mutat. Pontos ajánlatot a rendezvény adatai alapján küldünk."

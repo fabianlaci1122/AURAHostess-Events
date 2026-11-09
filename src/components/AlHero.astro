@@ -1,0 +1,81 @@
+---
+/** Aloldalak fekete fejrésze: morzsamenü, főcím, bevezető, gombok, fotó. */
+import FotoHely from './FotoHely.astro';
+import Ikon from './Ikon.astro';
+import { inline, telHref, type Tokenek } from '../lib/szoveg';
+import type { Felulet } from '../lib/tartalom';
+
+interface Props {
+  cimke?: string;
+  cim: string;
+  alcim?: string;
+  foto?: { leiras: string; fajl?: string; alt?: string };
+  morzsa: { nev: string; href: string }[];
+  gombok?: { ajanlat: string; telefon: string } | false;
+  egyediGomb?: { szoveg: string; href: string };
+  tok: Tokenek;
+  f: Felulet;
+}
+const { cimke, cim, alcim, foto, morzsa, gombok = false, egyediGomb, tok, f } = Astro.props;
+---
+
+<section class="sotet relative overflow-hidden" aria-labelledby="oldal-cim">
+  <svg class="pointer-events-none absolute -right-24 top-6 hidden h-[26rem] w-[44rem] text-bronz opacity-30 lg:block" viewBox="0 0 700 420" fill="none" aria-hidden="true">
+    <path d="M10 300C160 230 330 120 520 70c70-18 140-6 160 40" stroke="currentColor" stroke-width="1.1" />
+    <path d="M120 360c140-30 300-110 420-170" stroke="currentColor" stroke-width=".6" />
+  </svg>
+  <div class:list={['tarolo relative grid gap-10 pt-8 pb-16 sm:pb-20 lg:gap-16', foto && 'lg:grid-cols-12 lg:items-end']}>
+    <div class:list={[foto && 'lg:col-span-7']}>
+      <nav aria-label={f.morzsa.cimke}>
+        <ol class="flex flex-wrap items-center gap-x-2 text-sm text-elefant-halvany">
+          {
+            morzsa.map((m, i) => (
+              <li class="flex items-center gap-2">
+                {i < morzsa.length - 1 ? (
+                  <>
+                    <a href={m.href} class="inline-flex min-h-10 items-center hover:text-elefant">{m.nev}</a>
+                    <span aria-hidden="true" class="text-bronz">/</span>
+                  </>
+                ) : (
+                  <span aria-current="page" class="text-elefant">{m.nev}</span>
+                )}
+              </li>
+            ))
+          }
+        </ol>
+      </nav>
+      {cimke && <p class="cimke mt-8" set:html={inline(cimke, tok)} />}
+      <h1 id="oldal-cim" class:list={['h1', cimke ? 'mt-5' : 'mt-8']} set:html={inline(cim, tok)} />
+      {alcim && <p class="bevezeto mt-6 !max-w-2xl" set:html={inline(alcim, tok)} />}
+      {
+        gombok && (
+          <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+            <a href={gombok.ajanlat} class="gomb gomb-bronz">{f.gombok.ajanlat}</a>
+            <a href={telHref(gombok.telefon)} class="gomb gomb-korvonal-vilagos" data-hely="hero">
+              <Ikon nev="telefon" meret={18} />
+              {f.gombok.hivas}
+            </a>
+          </div>
+        )
+      }
+      {
+        egyediGomb && (
+          <div class="mt-9">
+            <a href={egyediGomb.href} class="gomb gomb-bronz">
+              {egyediGomb.szoveg}
+              <Ikon nev="nyil" meret={18} />
+            </a>
+          </div>
+        )
+      }
+      <slot />
+    </div>
+    {
+      foto && (
+        <div class="lg:col-span-5">
+          <FotoHely foto={foto} arany="5 / 4" kiemelt meretek="(min-width: 1024px) 36vw, 100vw" />
+        </div>
+      )
+    }
+  </div>
+</section>

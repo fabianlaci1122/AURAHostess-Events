@@ -1,0 +1,44 @@
+---
+/** Előadóest-csomag kártya – az ár az arazas.yaml-ből jön. */
+import Ikon from './Ikon.astro';
+import { forint, inline, type Tokenek } from '../lib/szoveg';
+import type { Arazas, Felulet } from '../lib/tartalom';
+
+interface Props {
+  ar: Arazas;
+  tok: Tokenek;
+  f: Felulet;
+  href: string;
+  gombSzoveg?: string;
+}
+const { ar, tok, f, href, gombSzoveg } = Astro.props;
+const c = ar.csomag;
+const ikonok = ['jegy', 'iranyitas', 'fogas'];
+---
+
+<div class="sotet relative overflow-hidden border-t-2 border-bronz p-6 sm:p-10">
+  <p class="cimke">{c.nev}</p>
+  <p class="mt-6 font-display text-[clamp(2.4rem,1.8rem+2.5vw,3.5rem)] leading-none font-semibold">
+    {c.letszam} hostess <span class="text-bronz">×</span> {c.ora} óra
+  </p>
+  <div class="mt-6 flex flex-wrap items-baseline gap-x-3 gap-y-2">
+    <p class="text-3xl font-medium tracking-tight">{forint(c.ar)}</p>
+    <p class="text-elefant-halvany">fix áron, alkalmanként</p>
+  </div>
+  <div class="mt-3 flex flex-wrap gap-2 text-sm">
+    {!ar.jovahagyva && <span set:html={inline(ar.jovahagyas_megjegyzes, tok)} />}
+    <span set:html={inline(ar.afa, tok)} />
+    <span set:html={inline(c.ar_megjegyzes, tok)} />
+  </div>
+  <ul class="mt-8 grid gap-3 border-t border-tinta-vonal pt-6 sm:grid-cols-3" role="list">
+    {
+      c.feladatok.map((feladat, i) => (
+        <li class="flex items-center gap-3">
+          <Ikon nev={ikonok[i] ?? 'pipa'} meret={22} class="text-bronz" />
+          <span set:html={inline(feladat, tok)} />
+        </li>
+      ))
+    }
+  </ul>
+  <a href={href} class="gomb gomb-bronz mt-8 w-full sm:w-auto">{gombSzoveg ?? f.gombok.csomag}</a>
+</div>

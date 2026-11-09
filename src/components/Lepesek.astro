@@ -1,0 +1,31 @@
+---
+/** Valódi sorrendet jelző lépések (a számozás itt információ, nem díszítés). */
+import { inline, type Tokenek } from '../lib/szoveg';
+import type { Szekcio } from '../lib/tartalom';
+
+interface Props {
+  elemek: NonNullable<Szekcio['elemek']>;
+  tok: Tokenek;
+}
+const { elemek, tok } = Astro.props;
+---
+
+<ol class="grid gap-y-10 md:grid-cols-2 md:gap-x-10 lg:grid-cols-4 lg:gap-x-8" role="list">
+  {
+    elemek.map((e, i) => (
+      <li class="relative grid grid-cols-[3.25rem_1fr] gap-x-4 lg:block">
+        <div class="lg:flex lg:items-center lg:gap-4">
+          <span class="lepes-szam" aria-hidden="true">{i + 1}</span>
+          {i < elemek.length - 1 && <span aria-hidden="true" class="hidden h-px flex-1 bg-bronz/40 lg:block" />}
+        </div>
+        <div class="lg:mt-5">
+          <h3 class="h3">
+            <span class="sr-only">{i + 1}. lépés: </span>
+            <span set:html={inline(e.cim, tok)} />
+          </h3>
+          {e.szoveg && <p class="halvany mt-2" set:html={inline(e.szoveg, tok)} />}
+        </div>
+      </li>
+    ))
+  }
+</ol>

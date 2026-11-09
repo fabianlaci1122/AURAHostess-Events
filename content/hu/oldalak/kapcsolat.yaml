@@ -1,0 +1,23 @@
+# ─────────────────────────────────────────────────────────────
+#  KAPCSOLAT – az elérhetőségek a content/hu/ceg.yaml-ből jönnek
+# ─────────────────────────────────────────────────────────────
+
+seo:
+  title: "Kapcsolat – AURA. Hostess & Events, Pécs"
+  description: "Hostesst keres pécsi rendezvényére? Hívjon, írjon e-mailt, vagy üzenjen az űrlapon. Pécs és Baranya."
+
+hero:
+  cim: "Kapcsolat"
+  alcim: "Hívjon, írjon, vagy küldjön üzenetet. Ajánlatkéréshez használja az ajánlatkérő űrlapot – ott minden adat egy helyen van, amire az ajánlathoz szükségünk lesz."
+
+szekciok:
+  elerhetosegek:
+    cimke: "Elérhetőségek"
+    cim: "Így ér el minket"
+    szoveg: "Ajánlatkérésre {valaszido} válaszolunk."
+
+  urlap:
+    cimke: "Üzenet"
+    cim: "Írjon nekünk"
+    bevezeto: "Kérdése van? Írja meg röviden, és válaszolunk."
+    link_szoveg: "Inkább ajánlatot kérne? Az ajánlatkérő űrlap a főoldalon van."

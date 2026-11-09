@@ -1,0 +1,42 @@
+---
+/** Esettanulmány: rendezvény, helyszín, létszám, feladat, megbízói idézet. */
+import FotoHely from './FotoHely.astro';
+import { inline, type Tokenek } from '../lib/szoveg';
+import type { Esettanulmany } from '../lib/tartalom';
+
+interface Props {
+  r: Esettanulmany;
+  tok: Tokenek;
+  cimSzint?: 'h2' | 'h3';
+  szeles?: boolean;
+}
+const { r, tok, cimSzint = 'h3', szeles = false } = Astro.props;
+const Cim = cimSzint;
+const adatok = [
+  ['Típus', r.tipus],
+  ['Helyszín', r.helyszin],
+  ['Létszám', r.letszam],
+  ['Feladat', r.feladat],
+];
+---
+
+<article class:list={['kartya flex h-full flex-col', szeles && 'lg:grid lg:grid-cols-2']}>
+  {r.foto && <FotoHely foto={r.foto} arany="3 / 2" meretek={szeles ? '(min-width: 1024px) 40vw, 100vw' : '(min-width: 1024px) 30vw, 100vw'} />}
+  <div class="flex flex-1 flex-col p-6 sm:p-8">
+    <Cim class="h3-display" set:html={inline(r.rendezveny, tok)} />
+    <dl class="mt-5 grid grid-cols-[auto_1fr] gap-x-5 gap-y-2 text-[0.9375rem]">
+      {
+        adatok.map(([cimke, ertek]) => (
+          <>
+            <dt class="text-xs font-medium tracking-[0.14em] uppercase text-halvany">{cimke}</dt>
+            <dd set:html={inline(ertek, tok)} />
+          </>
+        ))
+      }
+    </dl>
+    <figure class="mt-auto border-t border-vonal pt-6">
+      <blockquote class="font-display text-xl leading-snug font-semibold italic" set:html={`„${inline(r.idezet, tok)}”`} />
+      <figcaption class="mt-3 text-sm text-halvany" set:html={`– ${inline(r.idezo, tok)}`} />
+    </figure>
+  </div>
+</article>

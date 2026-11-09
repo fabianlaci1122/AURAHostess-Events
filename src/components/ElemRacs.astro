@@ -1,0 +1,36 @@
+---
+/** Elemek rácsban: ikonnal, fotóval vagy simán. */
+import FotoHely from './FotoHely.astro';
+import Ikon from './Ikon.astro';
+import { inline, type Tokenek } from '../lib/szoveg';
+import type { Szekcio } from '../lib/tartalom';
+
+interface Props {
+  elemek: NonNullable<Szekcio['elemek']>;
+  oszlop?: 2 | 3 | 4;
+  valtozat?: 'ikon' | 'foto' | 'kartya';
+  tok: Tokenek;
+  cimSzint?: 'h3' | 'h4';
+  class?: string;
+}
+const { elemek, oszlop = 2, valtozat = 'ikon', tok, cimSzint = 'h3', class: osztaly } = Astro.props;
+const racs = { 2: 'sm:grid-cols-2', 3: 'sm:grid-cols-2 lg:grid-cols-3', 4: 'sm:grid-cols-2 lg:grid-cols-4' }[oszlop];
+const Cim = cimSzint;
+---
+
+<ul class:list={['grid gap-x-8 gap-y-10', racs, osztaly]} role="list">
+  {
+    elemek.map((e) => (
+      <li class:list={[valtozat === 'kartya' && 'kartya p-6 sm:p-8']}>
+        {valtozat === 'foto' && e.foto && <FotoHely foto={e.foto} arany="4 / 3" meretek="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" class="mb-5" />}
+        {valtozat !== 'foto' && e.ikon && (
+          <span class="mb-5 inline-grid h-12 w-12 place-items-center rounded-full border border-bronz text-bronz-mely">
+            <Ikon nev={e.ikon} meret={22} />
+          </span>
+        )}
+        <Cim class="h3" set:html={inline(e.cim, tok)} />
+        {e.szoveg && <p class="halvany mt-2" set:html={inline(e.szoveg, tok)} />}
+      </li>
+    ))
+  }
+</ul>

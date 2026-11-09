@@ -1,0 +1,46 @@
+---
+/**
+ * „Papírlap” kártya – az oldal aláírás-eleme.
+ * A főoldalon az írásos eligazítás tartalmát mutatja (a pipák egymás után jelennek meg),
+ * a Rólunk oldalon a cég adatlapját.
+ */
+import Ikon from './Ikon.astro';
+import { inline, type Tokenek } from '../lib/szoveg';
+
+interface Props {
+  cim: string;
+  alcim?: string;
+  sorok: { cim: string; szoveg: string }[];
+  tok: Tokenek;
+  pipak?: boolean;
+  class?: string;
+  cimke?: string;
+}
+const { cim, alcim, sorok, tok, pipak = false, class: osztaly, cimke } = Astro.props;
+---
+
+<aside class:list={['eligazitas', osztaly]} aria-label={cimke ?? cim}>
+  <div class="eligazitas-fej">
+    <p class="eligazitas-cim" set:html={inline(cim, tok)} />
+    {alcim && <p class="eligazitas-al" set:html={inline(alcim, tok)} />}
+  </div>
+  <dl>
+    {
+      sorok.map((sor, i) => (
+        <div class="eligazitas-sor" style={`--i: ${i}`}>
+          <dt>
+            {pipak ? (
+              <span class="pipa">
+                <Ikon nev="pipa" meret={13} />
+              </span>
+            ) : (
+              <span class="vonalka" aria-hidden="true" />
+            )}
+            <span set:html={inline(sor.cim, tok)} />
+          </dt>
+          <dd set:html={inline(sor.szoveg, tok)} />
+        </div>
+      ))
+    }
+  </dl>
+</aside>

@@ -1,0 +1,20 @@
+---
+import { inline, type Tokenek } from '../lib/szoveg';
+
+interface Props {
+  cimke?: string;
+  cim?: string;
+  bevezeto?: string;
+  tok: Tokenek;
+  id?: string;
+  kozep?: boolean;
+  class?: string;
+}
+const { cimke, cim, bevezeto, tok, id, kozep = false, class: osztaly } = Astro.props;
+---
+
+<div class:list={['max-w-3xl', kozep && 'mx-auto text-center', osztaly]}>
+  {cimke && <p class:list={['cimke', kozep && 'justify-center']} set:html={inline(cimke, tok)} />}
+  {cim && <h2 id={id} class="h2 mt-4" set:html={inline(cim, tok)} />}
+  {bevezeto && <p class:list={['bevezeto mt-5', kozep && 'mx-auto']} set:html={inline(bevezeto, tok)} />}
+</div>

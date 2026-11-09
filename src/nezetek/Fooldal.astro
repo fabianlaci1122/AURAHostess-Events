@@ -1,0 +1,175 @@
+---
+import Base from '../layouts/Base.astro';
+import Adatlap from '../components/Adatlap.astro';
+import AjanlatSzekcio from '../components/AjanlatSzekcio.astro';
+import ElemRacs from '../components/ElemRacs.astro';
+import FotoHely from '../components/FotoHely.astro';
+import Gyik from '../components/Gyik.astro';
+import Ikon from '../components/Ikon.astro';
+import Lepesek from '../components/Lepesek.astro';
+import LogoSav from '../components/LogoSav.astro';
+import Osszevetes from '../components/Osszevetes.astro';
+import ReferenciaKartya from '../components/ReferenciaKartya.astro';
+import Savok from '../components/Savok.astro';
+import SzekcioFej from '../components/SzekcioFej.astro';
+import { ut, type Nyelv } from '../i18n/utak';
+import { alap, gyik, oldal, referenciak, szekcio } from '../lib/tartalom';
+import { gyikSema, vallalkozas, weboldal } from '../lib/seo';
+import { inline, telHref } from '../lib/szoveg';
+
+interface Props {
+  lang: Nyelv;
+}
+const { lang } = Astro.props;
+const kulcs = 'fooldal';
+const a = await alap(lang);
+const { felulet: f, ceg, tok } = a;
+const o = await oldal(lang, kulcs);
+const sz = (k: string) => szekcio(o, k, lang, kulcs);
+const kerdesek = await gyik(lang, kulcs);
+const ref = await referenciak(lang, kulcs);
+const site = Astro.site!;
+const ogKep = new URL('/og/aura-alap.png', site).href;
+const szolg = sz('szolgaltatasok');
+const miert = sz('miert');
+const osszevetes = sz('osszevetes');
+const refSz = sz('referenciak');
+---
+
+<Base
+  lang={lang}
+  kulcs={kulcs}
+  title={o.seo.title}
+  description={o.seo.description}
+  vanUrlap
+  a={a}
+  jsonld={[vallalkozas(ceg, site, ogKep), weboldal(ceg, site, lang), gyikSema(kerdesek, tok)]}
+>
+  <!-- Hero: a fő üzenet + az írásos eligazítás kártyája -->
+  <section class="sotet relative overflow-hidden" aria-labelledby="oldal-cim">
+    <svg class="pointer-events-none absolute -left-40 top-24 hidden h-[34rem] w-[72rem] text-bronz opacity-25 md:block" viewBox="0 0 1150 540" fill="none" aria-hidden="true">
+      <path d="M0 420C220 360 470 250 700 150 860 80 1010 40 1150 60" stroke="currentColor" stroke-width="1.2" />
+      <path d="M120 520c210-60 430-170 640-300" stroke="currentColor" stroke-width=".6" />
+    </svg>
+    <div class="tarolo relative grid gap-16 pt-12 pb-20 sm:pt-16 lg:grid-cols-12 lg:items-center lg:gap-14 lg:pt-20 lg:pb-32 xl:gap-20">
+      <div class="lg:col-span-7">
+        {o.hero.cimke && <p class="cimke" set:html={inline(o.hero.cimke, tok)} />}
+        <h1 id="oldal-cim" class="h1 mt-6" set:html={inline(o.hero.cim, tok)} />
+        {o.hero.alcim && <p class="bevezeto mt-7 !max-w-xl" set:html={inline(o.hero.alcim, tok)} />}
+        <div class="mt-10 flex flex-col gap-3 sm:flex-row">
+          <a href="#ajanlatkeres" class="gomb gomb-bronz">{f.gombok.ajanlat}</a>
+          <a href={telHref(ceg.telefon)} class="gomb gomb-korvonal-vilagos" data-hely="hero">
+            <Ikon nev="telefon" meret={18} />{f.gombok.hivas}
+          </a>
+        </div>
+        {
+          o.hero.bizalmi && (
+            <ul class="mt-12 grid grid-cols-2 gap-x-6 gap-y-3 border-t border-tinta-vonal pt-6 text-[0.9375rem] text-elefant-halvany sm:flex sm:flex-wrap sm:gap-x-8" role="list">
+              {o.hero.bizalmi.map((b) => (
+                <li class="flex items-center gap-2.5">
+                  <Ikon nev="pipa" meret={16} class="shrink-0 text-bronz" />
+                  <span set:html={inline(b, tok)} />
+                </li>
+              ))}
+            </ul>
+          )
+        }
+      </div>
+      <div class="relative lg:col-span-5">
+        <FotoHely foto={o.hero.foto} arany="4 / 5" kiemelt class="ml-auto !w-[86%] !justify-start !pt-10 sm:!w-[70%] lg:!w-[88%]" meretek="(min-width: 1024px) 34vw, 86vw" />
+        {
+          o.hero.eligazitas && (
+            <Adatlap
+              cim={o.hero.eligazitas.cim}
+              alcim={o.hero.eligazitas.alcim}
+              sorok={o.hero.eligazitas.sorok}
+              tok={tok}
+              pipak
+              class="relative -mt-40 w-[94%] sm:w-[78%] lg:absolute lg:-bottom-12 lg:-left-10 lg:mt-0 lg:w-[92%] xl:-left-16 xl:w-[86%]"
+            />
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Szolgáltatások -->
+  <section class="szekcio" aria-labelledby="szolg-cim">
+    <div class="tarolo">
+      <SzekcioFej id="szolg-cim" cimke={szolg.cimke} cim={szolg.cim} bevezeto={szolg.bevezeto} tok={tok} />
+      <ul class="mt-12 grid gap-8 md:grid-cols-2" role="list">
+        {
+          (szolg.elemek ?? []).map((e) => (
+            <li>
+              <article class="kartya group flex h-full flex-col transition-colors hover:border-bronz">
+                {e.foto && <FotoHely foto={e.foto} arany="16 / 10" meretek="(min-width: 768px) 45vw, 100vw" />}
+                <div class="flex flex-1 flex-col p-6 sm:p-8">
+                  <h3 class="h3-display" set:html={inline(e.cim, tok)} />
+                  {e.szoveg && <p class="halvany mt-3" set:html={inline(e.szoveg, tok)} />}
+                  {e.oldal && (
+                    <a href={ut(e.oldal, lang)} class="nyil-link mt-auto pt-5">
+                      <span set:html={inline(e.link_szoveg ?? e.cim, tok)} />
+                      <Ikon nev="nyil" meret={18} />
+                    </a>
+                  )}
+                </div>
+              </article>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Hogyan dolgozunk -->
+  <section class="szekcio hatter-homok" aria-labelledby="hogyan-cim">
+    <div class="tarolo">
+      <SzekcioFej id="hogyan-cim" cimke={sz('hogyan').cimke} cim={sz('hogyan').cim} tok={tok} />
+      <div class="mt-14"><Lepesek elemek={sz('hogyan').elemek ?? []} tok={tok} /></div>
+    </div>
+  </section>
+
+  <!-- Miért mi + összevetés -->
+  <section class="szekcio" aria-labelledby="miert-cim">
+    <div class="tarolo">
+      <SzekcioFej id="miert-cim" cimke={miert.cimke} cim={miert.cim} tok={tok} />
+      <ElemRacs elemek={miert.elemek ?? []} oszlop={4} tok={tok} class="mt-12" />
+
+      <div class="mt-20 grid gap-8 lg:grid-cols-12 lg:gap-12">
+        <div class="lg:col-span-4">
+          <p class="cimke" set:html={inline(osszevetes.cimke, tok)} />
+          <h3 class="h3-display mt-4" set:html={inline(osszevetes.cim, tok)} />
+        </div>
+        <div class="lg:col-span-8"><Osszevetes sz={osszevetes} tok={tok} /></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Referenciák -->
+  <section class="szekcio hatter-homok" aria-labelledby="ref-cim">
+    <div class="tarolo">
+      <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <SzekcioFej id="ref-cim" cimke={refSz.cimke} cim={refSz.cim} bevezeto={refSz.bevezeto} tok={tok} />
+        <a href={ut('referenciak', lang)} class="nyil-link shrink-0"><span set:html={inline(refSz.link_szoveg, tok)} /><Ikon nev="nyil" meret={18} /></a>
+      </div>
+      <ul class="mt-12 grid gap-6 lg:grid-cols-3" role="list">
+        {ref.esetek.slice(0, 3).map((r) => <li><ReferenciaKartya r={r} tok={tok} /></li>)}
+      </ul>
+      <div class="mt-14"><LogoSav logok={ref.logok} helyorzok={ref.logoHelyorzok} cim={refSz.megjegyzes} /></div>
+    </div>
+  </section>
+
+  <!-- GYIK -->
+  <section class="szekcio" aria-labelledby="gyik-cim">
+    <div class="tarolo grid gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-4">
+        <SzekcioFej id="gyik-cim" cimke={sz('gyik').cimke} cim={sz('gyik').cim} tok={tok} />
+      </div>
+      <div class="lg:col-span-8"><Gyik kerdesek={kerdesek} tok={tok} /></div>
+    </div>
+  </section>
+
+  <AjanlatSzekcio lang={lang} kulcs={kulcs} a={a} />
+
+  <Savok tipus="toborzo" cim={sz('toborzo').cim ?? ''} szoveg={sz('toborzo').szoveg} href={ut('jelentkezes', lang)} tok={tok} f={f} />
+</Base>

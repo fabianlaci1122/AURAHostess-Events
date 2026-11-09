@@ -1,0 +1,25 @@
+---
+import Ikon from './Ikon.astro';
+import { inline, type Tokenek } from '../lib/szoveg';
+import type { Kerdes } from '../lib/tartalom';
+
+interface Props {
+  kerdesek: Kerdes[];
+  tok: Tokenek;
+}
+const { kerdesek, tok } = Astro.props;
+---
+
+<div class="border-t border-vonal">
+  {
+    kerdesek.map((k) => (
+      <details class="gyik-elem">
+        <summary>
+          <span set:html={inline(k.kerdes, tok)} />
+          <Ikon nev="plusz" meret={22} />
+        </summary>
+        <p class="gyik-valasz" set:html={inline(k.valasz, tok)} />
+      </details>
+    ))
+  }
+</div>

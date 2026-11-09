@@ -1,0 +1,69 @@
+---
+import { inline, type Tokenek } from '../../lib/szoveg';
+
+interface Props {
+  urlapId: string;
+  nev: string;
+  cimke: string;
+  sugo?: string;
+  tipus?: 'text' | 'email' | 'tel' | 'date' | 'number' | 'textarea';
+  kotelezo?: boolean;
+  nemKotelezo: string;
+  autocomplete?: string;
+  max?: number;
+  min?: number;
+  maxSzam?: number;
+  tok: Tokenek;
+  class?: string;
+  /** false: ne írja ki a „(nem kötelező)” jelzést (pl. ha az egész lépés önkéntes) */
+  opcionalisJel?: boolean;
+}
+const {
+  opcionalisJel = true,
+  urlapId,
+  nev,
+  cimke,
+  sugo,
+  tipus = 'text',
+  kotelezo = false,
+  nemKotelezo,
+  autocomplete,
+  max,
+  min,
+  maxSzam,
+  tok,
+  class: osztaly,
+} = Astro.props;
+const id = `${urlapId}-${nev}`;
+const sugoId = sugo ? `${id}-sugo` : undefined;
+const hibaId = `${id}-hiba`;
+const leiras = [sugoId, hibaId].filter(Boolean).join(' ');
+---
+
+<div class:list={['mezo', osztaly]} data-mezo={nev}>
+  <label for={id} class="mezo-cimke">
+    <span set:html={inline(cimke, tok)} />
+    {!kotelezo && opcionalisJel && <span class="opcionalis"> ({nemKotelezo})</span>}
+  </label>
+  {sugo && <p id={sugoId} class="mezo-sugo" set:html={inline(sugo, tok)} />}
+  {
+    tipus === 'textarea' ? (
+      <textarea id={id} name={nev} class="bemenet" required={kotelezo} maxlength={max} aria-describedby={leiras} rows="4" />
+    ) : (
+      <input
+        id={id}
+        name={nev}
+        type={tipus}
+        class="bemenet"
+        required={kotelezo}
+        autocomplete={autocomplete}
+        maxlength={tipus !== 'date' && tipus !== 'number' ? max : undefined}
+        min={min}
+        max={maxSzam}
+        inputmode={tipus === 'number' ? 'numeric' : undefined}
+        aria-describedby={leiras}
+      />
+    )
+  }
+  <p id={hibaId} class="mezo-hiba" data-hiba></p>
+</div>

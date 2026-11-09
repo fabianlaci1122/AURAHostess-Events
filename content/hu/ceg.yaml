@@ -1,0 +1,35 @@
+# ─────────────────────────────────────────────────────────────
+#  CÉGADATOK
+#  Ezek jelennek meg a fejlécben, a láblécben, a Kapcsolat oldalon
+#  és a keresőknek szóló adatokban (schema.org).
+#  Amíg egy érték [[HIÁNYZIK: …]], az oldalon sárga jelöléssel látszik.
+# ─────────────────────────────────────────────────────────────
+
+nev: "AURA. Hostess & Events"
+rovid_nev: "AURA."
+motto: "More than a vibe. It's AURA."
+leiras: "Felkészített, bejelentett hostess-csapat konferenciákra, gálákra, VIP-fogadásokra és előadóestekre Pécsen és Baranyában."
+
+# Telefonszám nemzetközi formában, szóközökkel, pl. "+36 30 123 4567"
+telefon: "[[HIÁNYZIK: telefonszám]]"
+email: "[[HIÁNYZIK: e-mail-cím]]"
+instagram: "https://www.instagram.com/aurahostessevents/"
+instagram_nev: "@aurahostessevents"
+google_cegprofil: "[[HIÁNYZIK: Google Cégprofil link]]"
+
+# Ha a cím nem nyilvános, írj ""-t (üres) a cim és az iranyitoszam helyére:
+# ilyenkor csak a város és a szolgáltatási terület jelenik meg.
+varos: "Pécs"
+iranyitoszam: "[[HIÁNYZIK: irányítószám]]"
+cim: "[[HIÁNYZIK: utca, házszám – vagy üresen hagyni, ha nem nyilvános]]"
+terulet: "Pécs és Baranya"
+
+# Válaszidő ajánlatkérésre. Mondatba illesztjük, pl. "24 órán belül"
+valaszido: "[[HIÁNYZIK: X órán belül – a tulajdonossal egyeztetni]]"
+
+tapasztalat: "5+ év"
+max_egyszerre: 10
+havi_hostess: "6–15"
+
+# A hostess-jelentkezés életkor-nyilatkozatához, pl. "18"
+korhatar: "[[HIÁNYZIK: korhatár – a tulajdonossal egyeztetni]]"

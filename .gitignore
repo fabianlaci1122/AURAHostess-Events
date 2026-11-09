@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.astro/
+.netlify/
+.env
+.env.*
+!.env.example
+teszt-webhook.log
+.DS_Store
+
+# Helyi előnézet-beállítás (gépspecifikus útvonalak)
+.claude/

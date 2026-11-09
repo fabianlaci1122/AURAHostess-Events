@@ -1,0 +1,56 @@
+# ─────────────────────────────────────────────────────────────
+#  RÓLUNK
+# ─────────────────────────────────────────────────────────────
+
+seo:
+  title: "Rólunk – hostess ügynökség Pécsen | AURA. Hostess & Events"
+  description: "Az AURA. 5+ éve ad felkészített, bejelentett hostesseket pécsi rendezvényekre. Ismerje meg, kik vagyunk, és hogyan dolgozunk."
+
+hero:
+  cim: "Rólunk"
+  alcim: "Pécsi hostess-csapat, 5+ éve rendezvényeken."
+
+szekciok:
+  tulajdonos:
+    cimke: "A tulajdonos"
+    cim: "[[HIÁNYZIK: a tulajdonos neve]]"
+    szoveg: "[[HIÁNYZIK: a tulajdonos története – hogyan indult az AURA., miért csinálja (3–5 mondat)]]"
+    megjegyzes: "A céget a tulajdonos egyedül vezeti – ajánlatkéréskor is vele beszél."
+    foto:
+      leiras: "FOTÓ: a tulajdonos portréja"
+
+  adatlap:
+    cim: "Adatlap"
+    szoveg: "AURA. Hostess & Events"
+    elemek:
+      - cim: "Működik"
+        szoveg: "5+ éve"
+      - cim: "Terület"
+        szoveg: "{terulet}"
+      - cim: "Csapat"
+        szoveg: "havonta {havi_hostess} hostess"
+      - cim: "Egyszerre"
+        szoveg: "legfeljebb {max_egyszerre} hostess"
+      - cim: "Vezeti"
+        szoveg: "a tulajdonos, személyesen"
+
+  ertekek:
+    cimke: "Amit fontosnak tartunk"
+    cim: "Megbízható, rugalmas, fiatalos"
+    elemek:
+      - cim: "Megbízható"
+        szoveg: "Írásos eligazítás, bejelentett hostessek, és tartalék, ha valaki kiesik."
+        ikon: dokumentum
+      - cim: "Rugalmas"
+        szoveg: "Egy hívásra összeállítjuk a csapatot – konferenciára, gálára vagy előadóestre."
+        ikon: csere
+      - cim: "Fiatalos"
+        szoveg: "Fiatal csapat, közvetlen hangnem, rendezett megjelenés."
+        ikon: csapat
+
+  motto:
+    szoveg: "More than a vibe. It's AURA."
+
+  cta:
+    cim: "Dolgozzunk együtt a következő rendezvényén."
+    szoveg: "Kérjen ajánlatot – {valaszido} jelentkezünk."
